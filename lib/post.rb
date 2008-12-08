@@ -51,8 +51,9 @@ class Post < Sequel::Model
     end.join(" ") unless tags.nil?
   end
 
+  # this class method bypasses validations, so the condition
   def self.make_slug(title)
-    title.downcase.gsub(/ /, '_').gsub(/[^a-z0-9_]/, '').squeeze('_')
+    title.downcase.gsub(/ /, '_').gsub(/[^a-z0-9_]/, '').squeeze('_') unless title.nil?
   end
 
   ########

@@ -100,9 +100,15 @@ end
 
 post '/posts' do
   auth
-  post = Post.new :title => params[:title], :tags => params[:tags], :body => params[:body], :created_at => Time.now, :slug => Post.make_slug(params[:title])
-  post.save
-  redirect post.url
+  post = Post.new({ :title => params[:title], :tags => params[:tags],
+                    :body => params[:body], :created_at => Time.now,
+                    :slug => Post.make_slug(params[:title]) })
+  begin
+    post.save
+    redirect(post.url)
+  rescue
+    redirect 'posts/new'
+  end
 end
 
 get '/past/:year/:month/:day/:slug/edit' do

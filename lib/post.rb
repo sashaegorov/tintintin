@@ -13,6 +13,11 @@ class Post < Sequel::Model
     timestamp :created_at
   end
 
+  validates do
+   presence_of :title
+   presence_of :body
+  end
+
   def url
     d = created_at
     "/past/#{d.year}/#{d.month}/#{d.day}/#{slug}/"
@@ -36,14 +41,14 @@ class Post < Sequel::Model
   end
 
   def more?
-    summary, more = split_content(body)
+    summary, more = split_content(body) unless body.nil?
     more
   end
 
   def linked_tags
     tags.split.inject([]) do |accum, tag|
       accum << "<a href=\"/past/tags/#{tag}\">#{tag}</a>"
-    end.join(" ")
+    end.join(" ") unless tags.nil?
   end
 
   def self.make_slug(title)

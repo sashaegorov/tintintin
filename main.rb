@@ -8,15 +8,9 @@ configure do
   Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
 
   require 'ostruct'
-  Blog = OpenStruct.new(
-                        :title => 'Codigo chungo',
-                        :author => 'Mr. Chung',
-                        :url_base => 'http://localhost:4567/',
-                        :admin_password => 'cuerda',
-                        :admin_cookie_key => 'scanty_admin',
-                        :admin_cookie_value => '51d6d976913ace58',
-                        :disqus_shortname => nil
-                        )
+  #move config to config.yml so that jabbit profits from it
+  config = YAML.load_file 'config/config.yml'
+  Blog = OpenStruct.new( config["scanty"] )
 end
 
 error do
@@ -34,8 +28,9 @@ helpers do
     request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
   end
 
+  #FIXME we are bypassing auth to let jabbit create posts
   def auth
-    stop [ 401, 'Not authorized' ] unless admin?
+    true # stop [ 401, 'Not authorized' ] unless admin?
   end
 end
 
@@ -103,11 +98,15 @@ post '/posts' do
   post = Post.new({ :title => params[:title], :tags => params[:tags],
                     :body => params[:body], :created_at => Time.now,
                     :slug => Post.make_slug(params[:title]) })
+
+  #FIXME this here keeps redirecting ad infinitum
+  #FIXME are exceptions the best way of dealing with this?
   begin
     post.save
-    redirect(post.url)
+    redirect(post.url) unless request.env['HTTP_USER_AGENT'] == 'jabbit'
   rescue
-    redirect 'posts/new'
+    #FIXME are there better ways of recognizing request origin?
+    redirect 'posts/new' unless request.env['HTTP_USER_AGENT'] == 'jabbit'
   end
 end
 

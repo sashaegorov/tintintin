@@ -1,87 +1,43 @@
-= Scanty, a really small blog
+= microblog codigochungo
+  the attempt is to turn scanty into a microblog with posting capabilities from
+  jabber clients.
 
-== Overview
+  please refer to README_SCANTY.rdoc for sinatra scanty info
 
-Scanty is blogging software.  Software for my blog, to be exact:
-http://adam.blog.heroku.com
+= INSTALL and use (development)
 
-It is not a blogging engine, but it's small and easy to modify, so it could be
-the starting point for your blog, too.
+  * install jabbit dependencies:
+  $ gem install xmpp4r-simple eventmachine rest_client
 
-== Features
+  * make a jabber account (Google Talk will do) for your microblog.
+    e.g: jabbit@your-microblog-domain.com
+  * make yourself GTalk-friend of jabbit@your-microblog-domain.com
+  * set the connection data for jabbit and scanty into config/config.yml
 
-* Posts (shock!)
-* Tags
-* Markdown (via Maruku)
-* Ruby code syntax highlighting (via Syntax)
-* Atom feed
-* Comments via Disqus
-* Web framework = Sinatra
-* ORM = Sequel
-
-== Dependencies
-
-  $ gem install sinatra
-
-Sequel, Maruku, and Syntax are all vendored.
-
-== Setup
-
-Edit main.rb and change the Blog config struct at the top to your liking.  For
-security purposes, change the admin password and the admin cookie key and
-value.  These last two can be set to any random value you like, just choose
-something other than the default.
-
-Then run the server:
-
+  * start scanty (development mode!)
   $ ruby main.rb
 
-And visit: http://localhost:4567/
+  * start jabbit as now:
+  $ irb
+  >> require 'lib/jabbit'
+  >> Jabbit.new
 
-Log in with the password you selected, then click New Post.  The rest should be
-self-explanatory.
+  * start chatting with jabbit:
+  hey there title. tags: tag1, tag2.<code>puts 'jabbit!'</code>
 
-In production, you'll probably want to run "rake start" to start (and restart)
-the server.  Change the value of "port" at the top of the Rakefile to run on a
-different port.
+  you should see a the post in your microblog (read FIXME bellow)
 
-== Database
+  FIXME scanty keeps trying to redirect ad infinitum.
+        work-around: stop it, start it, ignore jabbit help message
 
-The default is a SQLite file named blog.db.  To use something else, set
-DATABASE_URL in your environment when running the app, i.e.:
+  * visit your scanty on browser to see your posts
 
-  $ DATABASE_URL='mysql://localhost/myblog' ruby main.rb
+= TODO
+* simple user management for web users, unify with jabber users somehow
+* add authorship fields to posts table
+* daemonize jabbit and provide rake task to start, stop it (god? monit?)
+* specs it all!
+* jabber friends addition
 
-Or, modify the Sequel.connect statement at the top of main.rb.
-
-The database will be created automatically when the server is executed.
-
-== Comments
-
-There are no comments by default.  If you wish to activate comments, create an
-account and a website on Disqus (disqus.com) and enter the website shortname as
-the :disqus_shortname value in the Blog config struct.
-
-== Import data
-
-Christopher Swenson has a Wordpress importer: http://github.com/swenson/scanty_wordpress_import
-
-Other kinds of data can be imported easily, take a look at the rake task :import for an example of loading from a YAML file with field names that match the database schema.
-
-== Customize
-
-There are no themes or settings beyond the basic ones in the Blog struct.  Just
-edit the CSS or the code as you see fit.
-
-== Meta
-
-Written by Adam Wiggins
-
-Patches contributed by: Christopher Swenson
-
-Released under the MIT License: http://www.opensource.org/licenses/mit-license.php
-
-http://github.com/adamwiggins/keen
-
-http://adam.blog.heroku.com/
-
+= FIXME
+* scanty keeps on redirecting (check log) HTTP 302 after jabbit posts creation

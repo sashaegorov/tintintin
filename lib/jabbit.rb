@@ -7,13 +7,14 @@ class Jabbit
   # help message if jabbing goes wrong. super simple DSL for posts
   HELP_MESSAGE = <<-HELP
 Try again!
-title without points. tags: tag1, tag2. body here<code>puts 'hello'</code>"
+title without points. tags: tag1, tag2. body here<code>puts 'hello'</code>
   HELP
 
   def initialize
     config = YAML.load_file 'config/config.yml'
     @scanty_url  = config["scanty"]["url_base"]
     @jabber = Jabber::Simple.new(config["jabbit"]["login"], config["jabbit"]["password"])
+    puts "jabbit started #{config["jabbit"]["login"]} -> #{@scanty_url}"
     fork_jab
   end
 
@@ -80,3 +81,4 @@ title without points. tags: tag1, tag2. body here<code>puts 'hello'</code>"
 
 end
 
+Jabbit.new

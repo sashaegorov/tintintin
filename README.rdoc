@@ -7,7 +7,7 @@
 = INSTALL and use (development)
 
   * install jabbit dependencies:
-  $ gem install xmpp4r-simple eventmachine rest_client
+  $ gem install xmpp4r-simple eventmachine rest-client
 
   * make a jabber account (Google Talk will do) for your microblog.
     e.g: jabbit@your-microblog-domain.com
@@ -18,24 +18,22 @@
   $ ruby main.rb
 
   * start jabbit as now:
-  $ irb
-  >> require 'lib/jabbit'
-  >> Jabbit.new
+  $ rake jabbit:start
+  rake jabbit tasks (check rake -T) are only wrapping jabbit.sh script
 
   * start chatting with jabbit:
-  hey there title. tags: tag1, tag2.<code>puts 'jabbit!'</code>
+  my first jab post. tags: jabber, scanty.<code>puts 'hello from jabbit!'</code>
 
   you should see a the post in your microblog (read FIXME bellow)
 
   FIXME scanty keeps trying to redirect ad infinitum.
-        work-around: stop it, start it, ignore jabbit help message
+        work-around: stop scanty, start it, ignore jabbit help message
 
   * visit your scanty on browser to see your posts
 
 = TODO
 * simple user management for web users, unify with jabber users somehow
 * add authorship fields to posts table
-* daemonize jabbit and provide rake task to start, stop it (god? monit?)
 * specs it all!
 * jabber friends addition
 

@@ -29,9 +29,8 @@ title without points. tags: tag1, tag2. body here<code>puts 'hello'</code>
       EM::PeriodicTimer.new(1) do
         @jabber.received_messages do |message|
           begin
-            RestClient.post("#{@scanty_url}/posts",
-                            new_post_form(message),
-                            :http_user_agent => 'jabbit')
+            RestClient.post("#{@scanty_url}/posts", new_post_form(message),
+                            :user_agent => 'jabbit')
             msg = 'Ok'
           rescue
             #TODO is an exception the good way? Rack with HTTP error code?

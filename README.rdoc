@@ -31,18 +31,10 @@
   * start chatting with jabbit:
   my first jab post. tags: jabber, scanty.<code>puts 'hello from jabbit!'</code>
 
-  you should see the new post in your microblog (read FIXME bellow)
-
-  FIXME scanty keeps trying to redirect ad infinitum.
-        work-around: stop scanty, start it, ignore jabbit help message
-
-  * visit your scanty on browser to see your posts
+  * visit your scanty on browser to see your jabbed posts
 
 = TODO
-* simple user management for web users, unify with jabber users somehow
+* allow jabber users login into web app
 * add authorship fields to posts table
 * specs it all!
 * jabber friends addition
-
-= FIXME
-* scanty keeps on redirecting (check log) HTTP 302 after jabbit posts creation

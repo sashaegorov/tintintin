@@ -28,9 +28,8 @@ helpers do
     request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
   end
 
-  #FIXME we are bypassing auth to let jabbit create posts
   def auth
-    true # stop [ 401, 'Not authorized' ] unless admin?
+    stop [ 401, 'Not authorized' ] unless admin?
   end
 end
 
@@ -93,20 +92,25 @@ get '/posts/new' do
   erb :edit, :locals => { :post => Post.new, :url => '/posts' }
 end
 
+post  '/posts', :agent => /jabbit/ do
+  post = Post.new({ :title => params[:title], :tags => params[:tags],
+                    :body => params[:body], :created_at => Time.now,
+                    :slug => Post.make_slug(params[:title]) })
+  post.save
+end
+
 post '/posts' do
   auth
   post = Post.new({ :title => params[:title], :tags => params[:tags],
                     :body => params[:body], :created_at => Time.now,
                     :slug => Post.make_slug(params[:title]) })
 
-  #FIXME this here keeps redirecting ad infinitum
-  #FIXME are exceptions the best way of dealing with this?
   begin
     post.save
-    redirect(post.url) unless request.env['HTTP_USER_AGENT'] == 'jabbit'
+    redirect(post.url)
   rescue
     #FIXME are there better ways of recognizing request origin?
-    redirect 'posts/new' unless request.env['HTTP_USER_AGENT'] == 'jabbit'
+    redirect 'posts/new'
   end
 end
 

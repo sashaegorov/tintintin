@@ -56,6 +56,11 @@ task :import => :environment do
 end
 
 namespace :jabbit do
+  desc 'test the jabbit. linux only!'
+  task :test do
+    system './jabbit.sh test'
+  end
+
   desc 'start the jabbit. linux only!'
   task :start do
     system './jabbit.sh start'

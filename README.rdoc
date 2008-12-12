@@ -12,19 +12,26 @@
   * make a jabber account (Google Talk will do) for your microblog.
     e.g: jabbit@your-microblog-domain.com
   * make yourself GTalk-friend of jabbit@your-microblog-domain.com
+
   * set the connection data for jabbit and scanty into config/config.yml
 
   * start scanty (development mode!)
   $ ruby main.rb
 
-  * start jabbit as now:
+  * then test if your jabbit is working with:
+  $ rake jabbit:test (does simply ruby lib/jabbit.rb)
+  solve every problem until you see:
+  jabbit started jabbit@your-jabber-provider.com -> http://localhost:4567/
+
+  * then start jabbit:
   $ rake jabbit:start
-  rake jabbit tasks (check rake -T) are only wrapping jabbit.sh script
+
+  rake jabbit tasks (check rake -T) simply wrap the jabbit.sh script
 
   * start chatting with jabbit:
   my first jab post. tags: jabber, scanty.<code>puts 'hello from jabbit!'</code>
 
-  you should see a the post in your microblog (read FIXME bellow)
+  you should see the new post in your microblog (read FIXME bellow)
 
   FIXME scanty keeps trying to redirect ad infinitum.
         work-around: stop scanty, start it, ignore jabbit help message

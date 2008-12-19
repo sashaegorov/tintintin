@@ -1,12 +1,32 @@
-<p>Title and body can not be blank</p>
 <form action="<%= url %>" method="post" name="edit">
-<div class="postzoom">
-  <h2 class="title"><input type="text" name="title" value="<%= post.title %>" /></h2>
-  <p class="meta"><input type="text" name="tags" value="<%= post.tags %>" /></p>
-  <p class="meta"><%= post.created_at %></p>
-  <div class="entry">
-    <textarea name="body"><%= post.body %></textarea>
+<div class="post">
+  <h2 class="title"><b><%= "#{ post.id.nil? ? "New" : "Edit" }" %></b> dodgy snippet!</h2>
+
+  <div class="field">
+    <p><label for="title">Title: </label>
+    <span class="help">can not be blank</span></p>
+    <input class="control" type="text" name="title" id="title" value="<%= post.title %>" />
   </div>
+
+  <div class="field">
+    <p><label for="tags">Tags: </label>
+    <span class="help">optional. separated by spaces</span></p>
+    <input class="control" type="text" name="tags" id="tags" value="<%= post.tags %>" />
+  </div>
+
+  <div class="field">
+    <p><label for="body">Body: </label><span class="help">can not be blank</span></p>
+    <textarea class="control" name="body" id="body" rows="8">
+      <%= post.body %>
+    </textarea>
+  </div>
+
+  <% unless post.id.nil? %>
+    <div class="field"><label>Posted: </label>
+      <%= post.created_at.strftime("%b %d at %I:%M %p") %>
+    </div>
+  <% end %>
+
   <div class="edit"><input type="submit" value="Save" /></div>
 </div>
 </form>

@@ -1,12 +1,20 @@
-<div class="postzoom">
-  <h2 class="title"><%= post.title %></h2>
-  <p class="meta"><small><%= post.linked_tags %></small></p>
-  <p class="meta"><%= post.created_at %></p>
+<div class="post">
+  <h2 class="title"><span class="date"><%= post[:created_at].strftime("%b") %><b><%= post[:created_at].strftime("%d") %></b></span>
+  <b><a href="<%= post.url %>"><%= post[:title] %></a></b> post author </h2>
+  <p class="tags">
+    <%= post.linked_tags %>
+    <% if Blog.disqus_shortname %>
+    | <a href="<%= post.url %>#disqus_thread">comments</a>
+    <% end %>
+  </p>
   <div class="entry">
-    <%= post.body_html %>
+    <%= post.summary %>
+    <% if post.more? %>
+    <a href="<%= post.url %>">Continue reading &raquo;</a>
+    <% end %>
   </div>
   <% if admin? %>
-  <div class="edit"><a href="<%= post.url %>edit">edit</a></div>
+    <div class="meta"><a class="more" href="<%= post.url %>edit">edit</a></div>
   <% end %>
 </div>
 

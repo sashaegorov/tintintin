@@ -1,26 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title><%= @title || Blog.title %></title>
-    <link href="/main.css" rel="stylesheet" type="text/css" />
+    <title><%= Blog.title %></title>
+    <meta name="keywords" content="ruby, microblog, sinatra" />
+    <meta name="description" content="a microblog to laugh about dodgy code" />
+    <meta name="author" content="http://www.least-significant-bit.com" />
+    <link href="/flashy.css" rel="stylesheet" type="text/css" />
+    <link href="/feed" rel="alternate" title="Primary Feed" type="application/atom+xml" />
   </head>
   <body>
+    <!-- start header -->
     <div id="header">
-      <div id="logo2">
+      <div id="logo">
 	<h1><a href="/"><%= Blog.title %></a></h1>
-	<p>by <%= Blog.author %></p>
+	<h2>by <%= Blog.author %></h2>
+      </div>
+      <div id="menu">
+	<ul>
+	  <li class="active"><a href="/">home</a></li>
+	  <li><a href="/help">help</a></li>
+	  <li><a href="/what-the-fuck">wtf</a></li>
+	</ul>
       </div>
     </div>
+    <!-- end header -->
 
-    <div id="content">
-      <%= yield %>
+    <!-- start page -->
+    <div id="page">
+      <!-- start content -->
+      <div id="content">
+	<%= yield %>
+      </div>
+      <!-- end content -->
+      <!-- start sidebar -->
+      <div id="sidebar">
+	<ul>
+	  <li id="search">
+	    <h2><b class="text1">Search</b></h2>
+	    <form method="get" action="">
+	      <fieldset>
+		<input type="text" id="s" name="s" value="" />
+		<input type="submit" id="x" value="Search" />
+	      </fieldset>
+	    </form>
+	  </li>
+	  <li>
+	    <h2><strong>Mr.</strong> Chung</h2>
+	    <ul>
+	      <li><a href="/past">Archive</a></li>
+              <li><a href="/feed">Subscribe to feed</a></li>
+	    </ul>
+	  </li>
+	  <li>
+	    <h2><strong>Wanna</strong> post?</h2>
+	    <ul>
+	      <li><a href="/help#jabber">from jabber?</a></li>
+	      <li><a href="/help#web">from web?</a></li>
+	    </ul>
+	  </li>
+	  <li>
+	    <h2><b>You love</b> Ruby</h2>
+	    <ul>
+	      <li><a href="http://github.com/joahking/scanty/tree">clone the repo</a></li>
+	      <li><a href="http://github.com/guides/pull-requests">send me a pull request</a></li>
+	      <li><a href="#">and lots of love</a></li>
+	    </ul>
+	  </li>
+	</ul>
+      </div>
+      <!-- end sidebar -->
+      <div style="clear: both;">&nbsp;</div>
     </div>
-
+    <!-- end page -->
+    <!-- start footer -->
     <div id="footer">
-      <p id="legal">
-	Content by <%= Blog.author %> |
-	Design adapted from <a href="http://www.freecsstemplates.org/preview/replenish">Replenish</a>
-      </p>
+      <p id="legal">hack: <a href="http://www.least-significant-bit.com"><%= Blog.author %></a> |
+      design adapted from <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
     </div>
+    <!-- end footer -->
   </body>
 </html>

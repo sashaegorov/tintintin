@@ -4,7 +4,7 @@
 
   please refer to README_SCANTY.rdoc for sinatra scanty info
 
-= INSTALL and use (development)
+= INSTALL and starting (development)
 
   * install jabbit dependencies:
   $ gem install xmpp4r-simple eventmachine rest-client
@@ -33,8 +33,14 @@
 
   * visit your scanty on browser to see your jabbed posts
 
+= intended workflow in production
+
+  * subscribe to scanty feeds
+  * post through jabbit
+
 = TODO
 * allow jabber users login into web app
 * add authorship fields to posts table
 * specs it all!
 * jabber friends addition
+* comments to posts

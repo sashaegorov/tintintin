@@ -48,7 +48,7 @@ class Post < Sequel::Model
   def linked_tags
     tags.split.inject([]) do |accum, tag|
       accum << "<a href=\"/past/tags/#{tag}\">#{tag}</a>"
-    end.join(" ") unless tags.nil?
+    end.join('&nbsp;') unless tags.nil?
   end
 
   # this class method bypasses validations, so the condition

@@ -1,9 +1,9 @@
-<h1>Archive</h1>
+<h2 class="title"><b>Archive</b> of dodgy snippets </h2>
 <table class="archive">
-<% posts.each do |post| %>
-	<tr>
-		<td class="date"><%= post.created_at.strftime("%b %d %Y") %></td>
-		<td class="title"><a href="<%= post.url %>"><%= post.title %></a></td>
-	</tr>
-<% end %>
+  <% posts.each do |post| %>
+  <tr>
+    <td class="date"><%= post.created_at.strftime("%b %d %Y") %></td>
+    <td class="title"><a href="<%= post.url %>"><%= post.title %></a></td>
+  </tr>
+  <% end %>
 </table>

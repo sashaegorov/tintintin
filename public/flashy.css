@@ -121,7 +121,7 @@ input, textarea, select {
 	float: left;
 	margin: 0;
 	font-size: 38px;
-	color: #0099E8;
+	color: #8BCB2F;
 }
 
 #logo h1 sup {
@@ -130,7 +130,7 @@ input, textarea, select {
 }
 
 #logo h1 a {
-	color: #0099E8;
+	color: #8BCB2F;
 }
 
 #logo h2 {
@@ -321,7 +321,7 @@ input, textarea, select {
 
 #sidebar a {
 	text-decoration: none;
-	color: #6D6D6D;
+	color: #0094E0;
 }
 
 /* Search */

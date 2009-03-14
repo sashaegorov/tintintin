@@ -1,6 +1,9 @@
 <form action="<%= url %>" method="post" name="edit">
 <div class="post">
-  <h2 class="title"><b><%= "#{ post.id.nil? ? "New" : "Edit" }" %></b> dodgy snippet!</h2>
+  <h2 class="title">
+    <b><%= "#{ post.id.nil? ? "New" : "Edit" }" %></b> article
+    <input type="submit" value="Save" />
+  </h2>
 
   <div class="field">
     <p><label for="title">Title: </label>
@@ -13,6 +16,8 @@
     <span class="help">optional. separated by spaces</span></p>
     <input class="control" type="text" name="tags" id="tags" value="<%= post.tags %>" />
   </div>
+
+  <a href="http://daringfireball.net/projects/markdown/syntax" target="_new">Markdown syntax</a>
 
   <div class="field">
     <p><label for="body">Body: </label><span class="help">can not be blank</span></p>

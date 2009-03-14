@@ -3,9 +3,9 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title><%= Blog.title %></title>
-    <meta name="keywords" content="ruby, microblog, sinatra" />
-    <meta name="description" content="a microblog to laugh about dodgy code" />
-    <meta name="author" content="http://www.least-significant-bit.com" />
+    <meta name="keywords" content="ruby, bdd, rails, merb, sinatra, rack, scanty, blog" />
+    <meta name="description" content="The technological blog of Joaquin Rivera (aka joahking)" />
+    <meta name="author" content="Joaquin Rivera (github.com/joahking)" />
     <link href="/flashy.css" rel="stylesheet" type="text/css" />
     <link href="/feed" rel="alternate" title="Primary Feed" type="application/atom+xml" />
   </head>
@@ -14,13 +14,12 @@
     <div id="header">
       <div id="logo">
 	<h1><a href="/"><%= Blog.title %></a></h1>
-	<h2>by <%= Blog.author %></h2>
+	<h2><%= Blog.header %></h2>
       </div>
       <div id="menu">
 	<ul>
-	  <li class="active"><a href="/">home</a></li>
-	  <li><a href="/help">help</a></li>
-	  <li><a href="/what-the-fuck">wtf</a></li>
+	  <%= write %>
+	  <li><a href="http://github.com/joahking/scanty/tree">scanty</a></li>
 	</ul>
       </div>
     </div>
@@ -36,36 +35,29 @@
       <!-- start sidebar -->
       <div id="sidebar">
 	<ul>
-	  <li id="search">
-	    <h2><b class="text1">Search</b></h2>
-	    <form method="get" action="">
-	      <fieldset>
-		<input type="text" id="s" name="s" value="" />
-		<input type="submit" id="x" value="Search" />
-	      </fieldset>
-	    </form>
+	  <li id="about">
+	    <h2><b class="text1">About</b></h2>
+	    The blog of Joaquin Rivera
+	    (aka <a href="http://github.com/joahking/" target="_new">joahking</a>)<br/>
+	    we talk about Ruby, BDD, Linux <br/>
+	    Rails, Merb, Sinatra, Rack and more
 	  </li>
 	  <li>
-	    <h2><strong>Mr.</strong> Chung</h2>
+	    <h2><b class="text1">Articles</b></h2>
 	    <ul>
 	      <li><a href="/past">Archive</a></li>
               <li><a href="/feed">Subscribe to feed</a></li>
 	    </ul>
 	  </li>
 	  <li>
-	    <h2><strong>Wanna</strong> post?</h2>
+	    <h2><b class="text1">Friends</b></h2>
 	    <ul>
-	      <li><a href="/help#jabber">from jabber?</a></li>
-	      <li><a href="/help#web">from web?</a></li>
+	      <%= friends %>
 	    </ul>
 	  </li>
 	  <li>
-	    <h2><b>You love</b> Ruby</h2>
-	    <ul>
-	      <li><a href="http://github.com/joahking/scanty/tree">clone the repo</a></li>
-	      <li><a href="http://github.com/guides/pull-requests">send me a pull request</a></li>
-	      <li><a href="#">and lots of love</a></li>
-	    </ul>
+	    <h2><b class="text1">Tags</b></h2>
+	    <%= tags %>
 	  </li>
 	</ul>
       </div>
@@ -75,7 +67,7 @@
     <!-- end page -->
     <!-- start footer -->
     <div id="footer">
-      <p id="legal">hack: <a href="http://www.least-significant-bit.com"><%= Blog.author %></a> |
+      <p id="legal">Powered by: <a href="http://github.com/joahking/scanty/tree">scanty</a> |
       design adapted from <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
     </div>
     <!-- end footer -->

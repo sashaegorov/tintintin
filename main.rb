@@ -8,7 +8,6 @@ configure do
   Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
 
   require 'ostruct'
-  #move config to config.yml so that jabbit profits from it
   config = YAML.load_file 'config/config.yml'
   Blog = OpenStruct.new( config["scanty"] )
 end
@@ -31,6 +30,22 @@ helpers do
   def auth
     stop [ 401, 'Not authorized' ] unless admin?
   end
+
+  def write
+    '<li><a href="posts/new">write</a></li>' if admin?
+  end
+
+  def friends
+    Blog.friends.inject("") do |friends, f|
+      friends << "<li><a href='#{f["url"]}'>#{f["text"]}</a></li>"
+    end
+  end
+
+  def tags
+    @tags.inject("") do |tags, tag|
+      tags << "<a href='/past/tags/#{tag}'>#{tag}</a>&nbsp;"
+    end unless @tags.nil?
+  end
 end
 
 layout 'layout'
@@ -38,11 +53,15 @@ layout 'layout'
 ### Public
 
 get '/' do
+  #FIXME doesn't this looks UNDRY?
+  @tags = Post.tags
   posts = Post.reverse_order(:created_at).limit(10)
   erb :index, :locals => { :posts => posts }
 end
 
 get '/past/:year/:month/:day/:slug/' do
+  #FIXME doesn't this looks UNDRY?
+  @tags = Post.tags
   post = Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   @title = post.title
@@ -60,6 +79,8 @@ get '/past' do
 end
 
 get '/past/tags/:tag' do
+  #FIXME doesn't this looks UNDRY?
+  @tags = Post.tags
   tag = params[:tag]
   posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
   @title = "Posts tagged #{tag}"
@@ -90,13 +111,6 @@ end
 get '/posts/new' do
   auth
   erb :edit, :locals => { :post => Post.new, :url => '/posts' }
-end
-
-post  '/posts', :agent => /jabbit/ do
-  post = Post.new({ :title => params[:title], :tags => params[:tags],
-                    :body => params[:body], :created_at => Time.now,
-                    :slug => Post.make_slug(params[:title]) })
-  post.save
 end
 
 post '/posts' do

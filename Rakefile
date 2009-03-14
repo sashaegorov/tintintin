@@ -54,25 +54,3 @@ task :import => :environment do
     DB[:posts] << post
   end
 end
-
-namespace :jabbit do
-  desc 'test the jabbit. linux only!'
-  task :test do
-    system './jabbit.sh test'
-  end
-
-  desc 'start the jabbit. linux only!'
-  task :start do
-    system './jabbit.sh start'
-  end
-
-  desc 'stop the jabbit. linux only!'
-  task :stop do
-    system './jabbit.sh stop'
-  end
-
-  desc 'show jabbit process status. linux only!'
-  task :status do
-    system './jabbit.sh status'
-  end
-end

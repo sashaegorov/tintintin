@@ -3,7 +3,7 @@
   <h2 class="title">
     <span class="date"><%= post[:created_at].strftime("%b") %>
     <b><%= post[:created_at].strftime("%d") %></b></span>
-    <b><a href="<%= post.url %>"><%= post[:title] %></a></b> post author
+    <b><a href="<%= post.url %>"><%= post[:title] %></a></b>
   </h2>
   <p>tags: <span class="tags">
     <%= post.linked_tags %>

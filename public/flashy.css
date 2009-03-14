@@ -105,7 +105,7 @@ input, textarea, select {
 /* Header */
 
 #header {
-	width: 900px;
+	width: 90%;
 	height: 40px;
 	margin: 0 auto 20px auto;
 	padding-top: 10px;
@@ -186,7 +186,7 @@ input, textarea, select {
 /* Page */
 
 #page {
-	width: 900px;
+	width: 90%;
 	margin: 0 auto;
 	background: #FFFFFF;
 	border: 1px #F0E9D6 solid;
@@ -197,13 +197,14 @@ input, textarea, select {
 
 #content {
 	float: left;
-	width: 600px;
+	width: 70%;
 	padding-left: 10px;
 }
 
 /* Post */
 
 .post {
+    padding-bottom: 40px;
 }
 
 .post .title {
@@ -279,7 +280,7 @@ input, textarea, select {
 
 #sidebar {
 	float: right;
-	width: 230px;
+	width: 15%x;
 	padding-right: 10px;
 }
 
@@ -379,7 +380,7 @@ input, textarea, select {
 /* Footer */
 
 #footer {
-	width: 880px;
+	width: 80%;
 	margin: 0 auto;
 	padding: 10px 0 0 0;
 	color: #353535;

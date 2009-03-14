@@ -42,9 +42,12 @@ helpers do
   end
 
   def tags
-    @tags.inject("") do |tags, tag|
-      tags << "<a href='/past/tags/#{tag}'>#{tag}</a>&nbsp;"
-    end unless @tags.nil?
+    unless @tags.nil?
+      list = @tags.inject("<span>") do |html, t|
+        html << "<a href='/past/tags/#{t}'>#{t}</a> "
+      end
+      "#{list}</span>"
+    end
   end
 end
 

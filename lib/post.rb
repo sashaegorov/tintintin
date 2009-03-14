@@ -18,6 +18,29 @@ class Post < Sequel::Model
    presence_of :body
   end
 
+  # this class method bypasses validations, so the condition
+  def self.make_slug(title)
+    title.downcase.gsub(/ /, '_').gsub(/[^a-z0-9_]/, '').squeeze('_') unless title.nil?
+  end
+
+  # returns unique non nil tags
+  # example
+  # [nil, nil, "tag1,tag2", "web, another", "tag1, tag2",
+  #  "tag1, tag2", "tag, tagga"]
+  # returns ["tag1", "tag2", "web", "another", "tag2", "tag", " tagga"]
+  def self.tags
+    map(:tags).compact. # nils out
+      collect { |t| t.split(',') }.flatten.uniq. # unique tags in 1-dim array
+      collect { |t| t.strip } # around spaces out
+  end
+
+  def linked_tags
+    tags.split(',').inject([]) do |accum, tag|
+      tag.strip!
+      accum << "<a href='/past/tags/#{tag}'>#{tag}</a>"
+    end.join('&nbsp;') unless tags.nil?
+  end
+
   def url
     d = created_at
     "/past/#{d.year}/#{d.month}/#{d.day}/#{slug}/"
@@ -43,17 +66,6 @@ class Post < Sequel::Model
   def more?
     summary, more = split_content(body) unless body.nil?
     more
-  end
-
-  def linked_tags
-    tags.split.inject([]) do |accum, tag|
-      accum << "<a href=\"/past/tags/#{tag}\">#{tag}</a>"
-    end.join('&nbsp;') unless tags.nil?
-  end
-
-  # this class method bypasses validations, so the condition
-  def self.make_slug(title)
-    title.downcase.gsub(/ /, '_').gsub(/[^a-z0-9_]/, '').squeeze('_') unless title.nil?
   end
 
   ########

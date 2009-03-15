@@ -210,8 +210,7 @@ input, textarea, select {
 .post .title {
 	margin-bottom: 20px;
 	padding-bottom: 5px;
-	padding-left: 40px;
-	background: url(images/img02.jpg) no-repeat left top;
+	padding-left: 10px;
 	border-bottom: 1px dashed #D1D1D1;
 	color: #8BCB2F;
 }
@@ -478,7 +477,6 @@ pre span.symbol { color: #008B8B; }
 	text-align: center;
 	font-size: 10px;
 	font-weight: bold;
-	color: #999999;
 }
 
 .post .date b {
@@ -487,8 +485,7 @@ pre span.symbol { color: #008B8B; }
 	display: block;
 	margin-top: -5px;
 	font-size: 14px;
-	color: #5C5C5C;
-
+	color: #8BCB2F;
 }
 
 .tags {

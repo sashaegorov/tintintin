@@ -6,10 +6,11 @@
     <meta name="keywords" content="ruby, bdd, rails, merb, sinatra, rack, scanty, blog" />
     <meta name="description" content="The technological blog of Joaquin Rivera (aka joahking)" />
     <meta name="author" content="Joaquin Rivera (github.com/joahking)" />
-    <link href="/flashy.css" rel="stylesheet" type="text/css" />
     <link href="/feed" rel="alternate" title="Primary Feed" type="application/atom+xml" />
+    <%= all_javascripts %>
+    <%= all_styles %>
   </head>
-  <body>
+  <body onload="sh_highlightDocument();">
     <!-- start header -->
     <div id="header">
       <div id="logo">

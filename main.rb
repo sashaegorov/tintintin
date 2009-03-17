@@ -31,6 +31,25 @@ helpers do
     stop [ 401, 'Not authorized' ] unless admin?
   end
 
+  # this one will load all js for code highlighting
+  def all_javascripts
+    Dir.entries('public/js').inject("") do |all_js, js|
+      if js =~ /\.js$/
+        all_js << "<script src='/js/#{js}' type='text/javascript'></script>"
+      end
+      all_js
+    end
+  end
+
+  def all_styles
+    Dir.entries('public/css').inject("") do |all_css, css|
+      if css =~ /\.css$/
+        all_css << "<link href='/css/#{css}' rel='stylesheet' type='text/css' />"
+      end
+      all_css
+    end
+  end
+
   def write
     '<li><a href="posts/new">write</a></li>' if admin?
   end

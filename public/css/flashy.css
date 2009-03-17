@@ -435,35 +435,6 @@ html>body #footer {
 	padding-left: 0;
 }
 
-/* Code blocks */
-
-pre {
-	font-family: Monaco, monospace;
-	color: #ccc;
-	background: #F8F8FF none repeat scroll 0 0;
-	border: 1px solid #DEDEDE;
-	padding: 0.4em;
-	padding-left: 0.8em;
-}
-
-pre span.attribute { color: #009900; }
-pre span.char { color: #F00; }
-pre span.class { color: #A020F0; font-weight: bold; }
-pre span.comment { color: #0000FF; }
-pre span.constant { color: #008B8B; }
-pre span.escape { color: #6A5ACD; }
-pre span.expr { color: #2222CC; }
-pre span.global { color: #11AA44; }
-pre span.ident { color: #CCCCCC; }
-pre span.keyword { color: #A52A2A; font-weight: bold; }
-pre span.method { color: #008B8B; }
-pre span.module { color: #A020F0; font-weight: bold; }
-pre span.number { color: #DD00DD; }
-pre span.punct { color: #6A5ACD; }
-pre span.regex { color: #DD00DD; }
-pre span.string { color: #DD00DD; }
-pre span.symbol { color: #008B8B; }
-
 .post .date {
 	float: left;
 	width: 29px;

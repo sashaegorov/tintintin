@@ -1,7 +1,4 @@
-require File.dirname(__FILE__) + '/../vendor/maruku/maruku'
-
-$LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
-require 'syntax/convertors/html'
+require 'redcloth'
 
 class Post < Sequel::Model
   set_schema do
@@ -69,14 +66,8 @@ class Post < Sequel::Model
   end
 
   ########
-
-  def to_html(markdown)
-    h = Maruku.new(markdown).to_html
-    h.gsub(/<code>([^<]+)<\/code>/m) do
-      convertor = Syntax::Convertors::HTML.for_syntax "ruby"
-      highlighted = convertor.convert($1)
-      "<code>#{highlighted}</code>"
-    end
+  def to_html(textile)
+    RedCloth.new(textile).to_html
   end
 
   def split_content(string)

@@ -38,7 +38,7 @@ helpers do
   def friends
     Blog.friends.inject("") do |friends, f|
       friends << "<li><a href='#{f["url"]}'>#{f["text"]}</a></li>"
-    end
+    end unless Blog.friends.nil?
   end
 
   def tags

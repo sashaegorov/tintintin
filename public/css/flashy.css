@@ -30,9 +30,8 @@ h2 {
 }
 
 p, ul, ol {
-	margin: 0 0 2em 0;
-	text-align: justify;
-	line-height: 26px;
+    text-align: justify;
+    line-height: 26px;
 }
 
 a:link {

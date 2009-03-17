@@ -54,3 +54,25 @@ task :import => :environment do
     DB[:posts] << post
   end
 end
+
+# you have dumped your feather articles to articles.yml with:
+# File.open('articles.yml', 'w') do |f|
+#   f.puts Article.all.collect { |a|
+#     { :created_at => a.published_at,
+#       :body => a.content,
+#       :published => a.published,
+#       :title => a.title, :tags => a.tags }
+#   }.to_yaml
+# end
+# then import them
+desc "import from feather posts yml"
+task :feather => :environment do
+  posts = YAML.load_file 'articles.yml'
+
+  posts.each do |post|
+    if post[:published]
+      post.delete(:published)
+      Post.create post.merge(:slug => Post.make_slug(post[:title]))
+    end
+  end
+end

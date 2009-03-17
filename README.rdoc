@@ -14,8 +14,8 @@ the starting point for your blog, too.
 
 * Posts (shock!)
 * Tags
-* Markdown (via Maruku)
-* Ruby code syntax highlighting (via Syntax)
+* Textile (via RedCloth)
+* Browser side syntax highlight (via shjs http://shjs.sourceforge.net)
 * Atom feed
 * Comments via Disqus
 * Web framework = Sinatra
@@ -25,7 +25,7 @@ the starting point for your blog, too.
 
   $ gem install sinatra
 
-Sequel, Maruku, and Syntax are all vendored.
+Sequel is vendored.
 
 == Setup
 

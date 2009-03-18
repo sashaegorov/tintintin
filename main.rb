@@ -10,11 +10,17 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
 require 'sequel'
 
 configure do
-  Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
+  def sequel_db_uri
+    more = if Blog.db['adapter'] == 'mysql'
+             "#{ Blog.db['username'] }:#{ Blog.db['password'] }@#{ Blog.db['host'] }/"
+           end
+    "#{ Blog.db['adapter'] }://#{ more }#{ Blog.db['database'] }"
+  end
 
   require 'ostruct'
   config = YAML.load_file 'config/config.yml'
   Blog = OpenStruct.new( config["scanty"] )
+  Sequel.connect(sequel_db_uri)
 end
 
 error do
@@ -172,4 +178,3 @@ post '/past/:year/:month/:day/:slug/' do
   post.save
   redirect post.url
 end
-

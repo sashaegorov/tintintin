@@ -1,10 +1,20 @@
 scanty:
-  title: a scanty blog
-  header: a very light sinatra blog
+  title: scanty ultralight blog
+  author: you
   url_base: http://localhost:4567/
   admin_password: change me
   admin_cookie_key: scanty_admin
   admin_cookie_value: 51d6d976913ace58
+  db:
+    adapter: sqlite
+    database: blog.db
+# sequel mysql uri requires this all
+#   db:
+#     adapter: mysql
+#     database: lsb_scanty
+#     username: root
+#     password: root
+#     host: localhost
   disqus_shortname:
   friends:
        - url: http://www.friend.com

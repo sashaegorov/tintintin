@@ -55,6 +55,13 @@ task :import => :environment do
   end
 end
 
+file 'config/config.yml' => 'config/config.yml.sample' do
+  system 'cp config/config.yml.sample config/config.yml'
+end
+
+desc "copies the config.yml.sample to config/config.yml"
+task :config => 'config/config.yml'
+
 # you have dumped your feather articles to articles.yml with:
 # File.open('articles.yml', 'w') do |f|
 #   f.puts Article.all.collect { |a|

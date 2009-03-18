@@ -18,14 +18,9 @@ describe Post do
     @post.full_url.should == 'http://blog.example.com/past/2008/10/22/my_post/'
   end
 
-  it "produces html from the markdown body" do
+  it "produces html from the textile body" do
     @post.body = "* Bullet"
-    @post.body_html.should == "<ul>\n<li>Bullet</li>\n</ul>"
-  end
-
-  it "syntax highlights code blocks" do
-    @post.to_html("<code>\none\ntwo</code>").should ==
-      "<code><pre>\n<span class=\"ident\">one</span>\n<span class=\"ident\">two</span></pre></code>"
+    @post.body_html.should == "<ul>\n\t<li>Bullet</li>\n</ul>"
   end
 
   it "makes the tags into links to the tag search" do

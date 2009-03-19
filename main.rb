@@ -9,15 +9,21 @@ require 'sequel'
 
 configure do
   def sequel_db_uri
-    more = if Blog.db['adapter'] == 'mysql'
-             "#{ Blog.db['username'] }:#{ Blog.db['password'] }@#{ Blog.db['host'] }/"
-           end
-    "#{ Blog.db['adapter'] }://#{ more }#{ Blog.db['database'] }"
+    if Blog.db and Blog.db['adapter'] == 'mysql'
+      mysql_auth =  "#{ Blog.db['username'] }:#{ Blog.db['password'] }@#{ Blog.db['host'] }/"
+      "#{ Blog.db['adapter'] }://#{ mysql_auth }#{ Blog.db['database'] }"
+    else
+      "sqlite://blog.db"
+    end
   end
 
   require 'ostruct'
   config = YAML.load_file 'config/config.yml'
-  Blog = OpenStruct.new( config["scanty"] )
+  Blog = OpenStruct.new( config["scanty"].
+                         merge({
+                                 :title => "Least Significant Bit",
+                                 :header => "%(ask hack learn share)"
+                               }) )
   Sequel.connect(sequel_db_uri)
 end
 
@@ -63,10 +69,15 @@ helpers do
     '<li><a href="posts/new">write</a></li>' if admin?
   end
 
+  # change your friends
+  FRIENDS = [{ :url => "http://www.xuehka.blogspot.com",
+               :text => "xuehka" },
+             { :url => "http://www.mrdias.com",
+               :text => "mrdias" }]
   def friends
-    Blog.friends.inject("") do |friends, f|
-      friends << "<li><a href='#{f["url"]}'>#{f["text"]}</a></li>"
-    end unless Blog.friends.nil?
+    FRIENDS.inject("") do |friends, f|
+      friends << "<li><a href='#{f[:url]}'>#{f[:text]}</a></li>"
+    end
   end
 
   def tags

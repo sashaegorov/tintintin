@@ -1,14 +1,10 @@
 scanty:
-  title: scanty ultralight blog
-  author: you
   url_base: http://localhost:4567/
   admin_password: change me
   admin_cookie_key: scanty_admin
   admin_cookie_value: 51d6d976913ace58
-  db:
-    adapter: sqlite
-    database: blog.db
-# sequel mysql uri requires this all
+# for sqlite leave unchanged
+# for mysql sequel uri requires this all
 #   db:
 #     adapter: mysql
 #     database: lsb_scanty
@@ -16,8 +12,3 @@ scanty:
 #     password: root
 #     host: localhost
   disqus_shortname:
-  friends:
-       - url: http://www.friend.com
-         text: friend
-       - url: http://www.another-friend.com
-         text: another friend

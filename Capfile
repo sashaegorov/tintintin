@@ -49,6 +49,7 @@ after "deploy:setup", "db:configs"
 after "deploy:update_code", "db:symlink", "deploy:set_group"
 
 namespace :deploy do
+  desc "restart your passenger scanty"
   task :restart do
     run "touch #{current_path}/tmp/restart.txt"
   end

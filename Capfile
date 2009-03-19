@@ -12,7 +12,7 @@ load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
 
 set :application, "least-significant-bit"
-set :domain, "least-significant-bit.com"
+set :domain, "localhost"
 
 role :app, domain
 role :web, domain
@@ -20,7 +20,7 @@ role :db, domain, :primary => true
 
 set :scm, :git
 set :repository, "git://github.com/joahking/scanty.git"
-set :deploy_to, "/home/sites/#{application}"
+set :deploy_to, "/home/joahking/sites/#{application}"
 
 # this is needed if not owner and group will be root, read:
 # http://groups.google.com/group/capistrano/browse_thread/thread/5f853a6026e03677/8394c781c9b10faf?lnk=gst&q=root#8394c781c9b10faf

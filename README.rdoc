@@ -29,10 +29,10 @@ None, everything you need is vendored: Sinatra, Sequel, RedCloth.
 
 == Setup
 
-Edit main.rb and change the Blog config struct at the top to your liking.  For
-security purposes, change the admin password and the admin cookie key and
-value.  These last two can be set to any random value you like, just choose
-something other than the default.
+Edit main.rb and change the Blog title and header and the FRIENDS constant to
+your liking. For security purposes, change the admin password and the admin
+cookie key and value in Capfile for deployment. These last two can be set to
+any random value you like, just choose something other than the default.
 
 Then run the server:
 
@@ -50,12 +50,8 @@ different port.
 
 == Database
 
-The default is a SQLite file named blog.db.  To use something else, set
-DATABASE_URL in your environment when running the app, i.e.:
-
-  $ DATABASE_URL='mysql://localhost/myblog' ruby main.rb
-
-Or, modify the Sequel.connect statement at the top of main.rb.
+The default is a SQLite file named blog.db.  To use something else, see
+config.yml.sample or change uri at the top of main.rb
 
 The database will be created automatically when the server is executed.
 
@@ -89,12 +85,11 @@ for an example of loading from a YAML file with field names that match the
 database schema.
 
 NOTE: I was comming from feather, you find how I imported my articles from there
-in feather task
+in feather rake an capistrano tasks
 
-== Customize
+== CSS
 
-There are no themes or settings beyond the basic ones in the Blog struct.  Just
-edit the CSS or the code as you see fit.
+I am using an adapted flashy template, you might want to use another
 
 == Meta
 

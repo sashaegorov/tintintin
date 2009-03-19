@@ -1,3 +1,6 @@
+# we are deploying with capistrano you don't need rake start/stop tasks
+# for details check Capfile
+#TODO remove these unneeded tasks
 port = 3030
 
 desc "Start the app server"

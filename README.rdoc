@@ -1,6 +1,6 @@
 = Scanty, a really small blog
 
-NOTE: the scanty microblog with jabber posting it's been moved to branch jabbit.
+NOTE: the scanty microblog with jabber posting have been moved to branch jabbit.
 
 == Overview
 
@@ -16,16 +16,16 @@ the starting point for your blog, too.
 * Tags
 * Textile (via RedCloth)
 * Browser side syntax highlight (via shjs http://shjs.sourceforge.net)
-* Atom feed
 * Comments via Disqus
+* Dr. Nic's Github Badge
+* Atom feed
 * Web framework = Sinatra
 * ORM = Sequel
+* Full capistrano deployment, I mean full: mysql db creation, vhost creation
 
 == Dependencies
 
-  $ gem install sinatra
-
-Sequel is vendored.
+None, everything you need is vendored: Sinatra, Sequel, RedCloth.
 
 == Setup
 
@@ -43,8 +43,9 @@ And visit: http://localhost:4567/
 Log in with the password you selected, then click New Post.  The rest should be
 self-explanatory.
 
-In production, you'll probably want to run "rake start" to start (and restart)
-the server.  Change the value of "port" at the top of the Rakefile to run on a
+TODO: this is OLD remove: In production, you'll probably want
+to run "rake start" to start (and restart) the server.  Change the value of
+"port" at the top of the Rakefile to run on a
 different port.
 
 == Database
@@ -63,6 +64,20 @@ The database will be created automatically when the server is executed.
 There are no comments by default.  If you wish to activate comments, create an
 account and a website on Disqus (disqus.com) and enter the website shortname as
 the :disqus_shortname value in the Blog config struct.
+
+== Full deploy with passenger
+
+we are using capistrano, capitate and capinatra for full deployment to configure
+a mysql db and set a vhost for apache passenger.
+
+$ cap deploy:setup CAPINATRA=y
+
+set CAPINATRA to anything not nil, it's a hack since capinatra collapses with
+capistrano and capitate throwing non set variables exceptions
+
+Then deploy the blog with:
+
+$ cap deploy
 
 == Import data
 

@@ -38,10 +38,8 @@ task :stop do
 end
 
 task :environment do
-  require 'sequel'
-  DB = Sequel.connect('sqlite://blog.db')
-  $LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
-  require 'post'
+  require 'main'
+  DB = Sequel.connect(sequel_db_uri)
 end
 
 task :import => :environment do
@@ -72,9 +70,9 @@ task :config => 'config/config.yml'
 #   }.to_yaml
 # end
 # then import them
-desc "import from feather posts yml"
+desc "import from feather posts yml, indicate yaml location with YAML=..."
 task :feather => :environment do
-  posts = YAML.load_file 'articles.yml'
+  posts = YAML.load_file ENV['YAML']
 
   posts.each do |post|
     if post[:published]

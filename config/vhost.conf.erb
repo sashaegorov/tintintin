@@ -1,0 +1,5 @@
+<VirtualHost *>
+  ServerName <%= domain %>
+  ServerAlias www.<%= domain %>
+  DocumentRoot <%= deploy_to %>/current/public
+</VirtualHost>

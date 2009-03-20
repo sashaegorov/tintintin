@@ -21,7 +21,7 @@ the starting point for your blog, too.
 * Atom feed
 * Web framework = Sinatra
 * ORM = Sequel
-* Full capistrano deployment, I mean full: mysql db creation, vhost creation
+* Full capistrano deployment: from mysql db creation to vhost creation
 
 == Dependencies
 
@@ -63,16 +63,10 @@ the :disqus_shortname value in the Blog config struct.
 
 == Full deploy with passenger
 
-we are using capistrano, capitate and capinatra for full deployment to configure
-a mysql db and set a vhost for apache passenger.
+we are using capistrano and capitate for full deployment to configure a mysql db
+and set a vhost for apache passenger.
 
-$ cap deploy:setup CAPINATRA=y
-
-set CAPINATRA to anything not nil, it's a hack since capinatra collapses with
-capistrano and capitate throwing non set variables exceptions
-
-Then deploy the blog with:
-
+$ cap deploy:setup
 $ cap deploy
 
 == Import data

@@ -25,7 +25,9 @@ the starting point for your blog, too.
 
 == Dependencies
 
-None, everything you need is vendored: Sinatra, Sequel, RedCloth.
+None, everything you need is vendored: Sinatra, Sequel. And system wide RedCloth
+the reason is we are deploying to passenger, and the app fails to find some
+apache modules if ReddCloth vendored, in production is the ruby-entreprise gem
 
 == Setup
 

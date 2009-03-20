@@ -5,7 +5,7 @@ NOTE: the scanty microblog with jabber posting have been moved to branch jabbit.
 == Overview
 
 Scanty is blogging software.  Software for my blog, to be exact:
-http://adam.blog.heroku.com
+http://least-significant-bit.com (was http://adam.blog.heroku.com)
 
 It is not a blogging engine, but it's small and easy to modify, so it could be
 the starting point for your blog, too.
@@ -43,9 +43,9 @@ And visit: http://localhost:4567/
 Log in with the password you selected, then click New Post.  The rest should be
 self-explanatory.
 
-TODO: this is OLD remove: In production, you'll probably want
-to run "rake start" to start (and restart) the server.  Change the value of
-"port" at the top of the Rakefile to run on a
+we are deploying to passenger, but this will still be true:
+In production, you'll probably want to run "rake start" to start (and restart)
+the server.  Change the value of "port" at the top of the Rakefile to run on a
 different port.
 
 == Database
@@ -67,6 +67,7 @@ we are using capistrano and capitate for full deployment to configure a mysql db
 and set a vhost for apache passenger.
 
 $ cap deploy:setup
+
 $ cap deploy
 
 == Import data

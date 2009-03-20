@@ -2,12 +2,6 @@ require 'capitate'
 require 'capitate/recipes'
 set :project_root, File.dirname(__FILE__)
 
-# we only require capinatra for deploy:setup, after that it's not required
-# it collapses with capistrano and capitate throwing non set variables exceptions
-unless ENV['CAPINATRA'].nil?
-  require 'capinatra'
-end
-
 load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
 
@@ -42,13 +36,20 @@ set :admin_cookie_key, 'scanty_admin'
 set :admin_cookie_value, '51d6d976913ace58'
 
 # where capinatra apache vhost task will generate your vhost
-set :apache_vhost_dir, "/etc/apache2/sites-enabled/"
+set :apache_vhost_dir, "/etc/apache2/sites-available/"
 
-before "deploy:setup", "mysql:setup", "capinatra:vhost"
+before "deploy:setup", "mysql:setup", "deploy:vhost"
 after "deploy:setup", "db:configs"
 after "deploy:update_code", "db:symlink", "deploy:set_group"
 
 namespace :deploy do
+  desc "copies your passenger sinatra virtual host"
+  task :vhost do
+    template = File.read(File.join(File.dirname(__FILE__), 'config', 'vhost.conf.erb'))
+    put ERB.new(template).result(binding), "#{apache_vhost_dir}/#{application}.conf"
+    run "ln -nfs #{apache_vhost_dir}/#{application}.conf #{apache_vhost_dir}/../sites-enabled/#{application}"
+  end
+
   desc "restart your passenger scanty"
   task :restart do
     run "touch #{current_path}/tmp/restart.txt"

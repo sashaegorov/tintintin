@@ -35,19 +35,25 @@ set :scanty_admin_password, 'CHANGE-ME'
 set :admin_cookie_key, 'scanty_admin'
 set :admin_cookie_value, '51d6d976913ace58'
 
-# where capinatra apache vhost task will generate your vhost
-set :apache_vhost_dir, "/etc/apache2/sites-available/"
-
-before "deploy:setup", "mysql:setup", "deploy:vhost"
-after "deploy:setup", "db:configs"
+before "deploy:setup", "mysql:setup"
+after "deploy:setup", "deploy:configs", "deploy:vhost", "db:config"
 after "deploy:update_code", "db:symlink", "deploy:set_group"
 
+set :apache_dir, "/etc/apache2"
+
 namespace :deploy do
+  desc "creates the shared config directory"
+  task :configs do
+    run "mkdir #{shared_path}/config/"
+  end
+
   desc "copies your passenger sinatra virtual host"
   task :vhost do
     template = File.read(File.join(File.dirname(__FILE__), 'config', 'vhost.conf.erb'))
-    put ERB.new(template).result(binding), "#{apache_vhost_dir}/#{application}.conf"
-    run "ln -nfs #{apache_vhost_dir}/#{application}.conf #{apache_vhost_dir}/../sites-enabled/#{application}"
+    put ERB.new(template).result(binding), "#{shared_path}/config/#{application}.conf"
+
+    sudo "mv #{shared_path}/config/#{application}.conf #{apache_dir}/sites-available/#{application}.conf"
+    sudo "ln -nfs #{apache_dir}/sites-available/#{application}.conf #{apache_dir}/sites-enabled/#{application}.conf"
   end
 
   desc "restart your passenger scanty"
@@ -64,8 +70,7 @@ end
 require 'erb'
 namespace :db do
   desc "Copies the config yaml"
-  task :configs do
-    run "mkdir #{shared_path}/config/"
+  task :config do
     template = File.read(File.join(File.dirname(__FILE__), 'config', 'config.yml.erb'))
     put ERB.new(template).result(binding), "#{shared_path}/config/config.yml"
   end

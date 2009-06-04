@@ -96,15 +96,15 @@ layout 'layout'
 
 get '/' do
   #FIXME doesn't this looks UNDRY?
-  @tags = Post.tags
-  posts = Post.reverse_order(:created_at).limit(10)
+  @tags = Scanty::Post.tags
+  posts = Scanty::Post.reverse_order(:created_at).limit(10)
   erb :index, :locals => { :posts => posts }
 end
 
 get '/past/:year/:month/:day/:slug/' do
   #FIXME doesn't this looks UNDRY?
-  @tags = Post.tags
-  post = Post.filter(:slug => params[:slug]).first
+  @tags = Scanty::Post.tags
+  post = Scanty::Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   @title = post.title
   erb :post, :locals => { :post => post }
@@ -115,22 +115,22 @@ get '/past/:year/:month/:day/:slug' do
 end
 
 get '/past' do
-  posts = Post.reverse_order(:created_at)
+  posts = Scanty::Post.reverse_order(:created_at)
   @title = "Archive"
   erb :archive, :locals => { :posts => posts }
 end
 
 get '/past/tags/:tag' do
   #FIXME doesn't this looks UNDRY?
-  @tags = Post.tags
+  @tags = Scanty::Post.tags
   tag = params[:tag]
-  posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
+  posts = Scanty::Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
   @title = "Posts tagged #{tag}"
   erb :tagged, :locals => { :posts => posts, :tag => tag }
 end
 
 get '/feed' do
-  @posts = Post.reverse_order(:created_at).limit(10)
+  @posts = Scanty::Post.reverse_order(:created_at).limit(10)
   content_type 'application/atom+xml', :charset => 'utf-8'
   builder :feed
 end
@@ -152,14 +152,14 @@ end
 
 get '/posts/new' do
   auth
-  erb :edit, :locals => { :post => Post.new, :url => '/posts' }
+  erb :edit, :locals => { :post => Scanty::Post.new, :url => '/posts' }
 end
 
 post '/posts' do
   auth
-  post = Post.new({ :title => params[:title], :tags => params[:tags],
+  post = Scanty::Post.new({ :title => params[:title], :tags => params[:tags],
                     :body => params[:body], :created_at => Time.now,
-                    :slug => Post.make_slug(params[:title]) })
+                    :slug => Scanty::Post.make_slug(params[:title]) })
 
   begin
     post.save
@@ -172,14 +172,14 @@ end
 
 get '/past/:year/:month/:day/:slug/edit' do
   auth
-  post = Post.filter(:slug => params[:slug]).first
+  post = Scanty::Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   erb :edit, :locals => { :post => post, :url => post.url }
 end
 
 post '/past/:year/:month/:day/:slug/' do
   auth
-  post = Post.filter(:slug => params[:slug]).first
+  post = Scanty::Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   post.title = params[:title]
   post.tags = params[:tags]

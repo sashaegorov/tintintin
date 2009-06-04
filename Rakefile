@@ -80,7 +80,7 @@ task :feather => :environment do
   posts.each do |post|
     if post[:published]
       post.delete(:published)
-      Post.create post.merge(:slug => Post.make_slug(post[:title]))
+      Scanty::Post.create post.merge(:slug => Scanty::Post.make_slug(post[:title]))
     end
   end
 end

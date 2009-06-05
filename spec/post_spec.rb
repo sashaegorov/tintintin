@@ -72,7 +72,7 @@ describe Scanty::Post do
       Scanty::Post.tags.should == ["after", "around", "before"]
     end
 
-    it 'should not repeat tags' do
+    it 'should not return repeated tags' do
       posts = [ {:body=>"code", :tags=>"tag1, tag2", :title=>"first occurence tags"},
                 {:body=>"code", :tags=>"tag1, tag2, tag3", :title=>"repeated tags"} ]
       posts.each { |p| Scanty::Post.create p }

@@ -43,17 +43,54 @@ describe Scanty::Post do
     Scanty::Post.make_slug("Object-Oriented File Manipulation").should == 'objectoriented_file_manipulation'
   end
 
-  it 'returns tag list' do
-    posts = [{:body=>"code", :tags=>nil, :title=>"tag1,tag2"},
-             {:body=>"code", :tags=>nil, :title=>"tag1,tag2"},
-             {:body=>"code", :tags=>"tag1,tag2", :title=>"hey there"},
-             {:body=>"asdasdasdad", :tags=>"web, another", :title=>"web"},
-             {:body=>"code", :tags=>"tag1, tag2", :title=>"all rigth"},
-             {:body=>"code", :tags=>"tag1, tag2", :title=>"all suppy rigth"},
-             {:body=>"code", :tags=>"tag, tagga", :title=>"un post de prueba"} ]
-    posts.each { |p| Scanty::Post.create p }
+  describe 'tags method' do
+    before(:each) do
+      #OPTIMIZE sequel should have cleaner ways of accomplish this
+      Scanty::Post.all { |p| p.destroy }
+    end
 
-    Scanty::Post.tags.should == ["tag1", "tag2", "web", "another", "tag2",
-                                 "tag", "tagga"]
+    it 'should not return nil tags' do
+      posts = [{:body=>"code", :tags=>nil, :title=>"only nil tags"},
+               {:body=>"code", :tags=>"tag1,tag2", :title=>"non nil tags"} ]
+      posts.each { |p| Scanty::Post.create p }
+
+      Scanty::Post.tags.should_not include(nil)
+    end
+
+    it 'should not return empty string tags' do
+      posts = [{:body=>"code", :tags=>"", :title=>"empty string tags"},
+               {:body=>"code", :tags=>"tag1, tag2", :title=>"non empty  tags"} ]
+      posts.each { |p| Scanty::Post.create p }
+
+      Scanty::Post.tags.should_not include("")
+    end
+
+    it 'should return tags clean of spaces' do
+      Scanty::Post.create({ :title=>"spaced tags", :body=>"code",
+                            :tags=>" before,after , around "})
+
+      Scanty::Post.tags.should == ["after", "around", "before"]
+    end
+
+    it 'should not repeat tags' do
+      posts = [ {:body=>"code", :tags=>"tag1, tag2", :title=>"first occurence tags"},
+                {:body=>"code", :tags=>"tag1, tag2, tag3", :title=>"repeated tags"} ]
+      posts.each { |p| Scanty::Post.create p }
+
+      Scanty::Post.tags.should == ["tag1", "tag2", "tag3"]
+    end
+
+    it 'returns a sorted tag list' do
+      posts = [{:body=>"code", :tags=>"", :title=>"empty string tags"},
+               {:body=>"code", :tags=>nil, :title=>"only nil tags"},
+               {:body=>"code", :tags=>"1, 2", :title=>"numbered tags"},
+               {:body=>"code", :tags=>"aa, bb", :title=>"lettered tags"},
+               {:body=>"code", :tags=>"tag1, tag2", :title=>"first occurence tags"},
+               {:body=>"code", :tags=>"tag1, tag2, tag3", :title=>"repeated tags"} ]
+      posts.each { |p| Scanty::Post.create p }
+
+      Scanty::Post.tags.should == ["1", "2", "aa", "bb","tag1", "tag2", "tag3"]
+    end
+
   end
 end

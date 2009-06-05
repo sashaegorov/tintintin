@@ -1,5 +1,5 @@
 require 'RedCloth'
-
+require 'ruby-debug'
 module Scanty
   class Post < Sequel::Model
     set_schema do
@@ -21,15 +21,11 @@ module Scanty
       title.downcase.gsub(/ /, '_').gsub(/[^a-z0-9_]/, '').squeeze('_') unless title.nil?
     end
 
-    # returns unique non nil tags
-    # example
-    # [nil, nil, "tag1,tag2", "web, another", "tag1, tag2",
-    #  "tag1, tag2", "tag, tagga"]
-    # returns ["tag1", "tag2", "web", "another", "tag2", "tag", " tagga"]
+    # returns sorted unique non nil non empty tags, see specs
     def self.tags
       map(:tags).compact. # nils out
         collect { |t| t.split(',') }.flatten.uniq. # unique tags in 1-dim array
-        collect { |t| t.strip } # around spaces out
+        collect { |t| t.strip }.sort # around spaces out and sorting
     end
 
     def linked_tags

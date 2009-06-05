@@ -1,5 +1,5 @@
 require 'RedCloth'
-require 'ruby-debug'
+
 module Scanty
   class Post < Sequel::Model
     set_schema do

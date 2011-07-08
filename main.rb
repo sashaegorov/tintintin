@@ -69,17 +69,6 @@ helpers do
     '<li><a href="posts/new">write</a></li>' if admin?
   end
 
-  # change your friends
-  FRIENDS = [{ :url => "http://www.xuehka.blogspot.com",
-               :text => "xuehka" },
-             { :url => "http://www.mrdias.com",
-               :text => "mrdias" }]
-  def friends
-    FRIENDS.inject("") do |friends, f|
-      friends << "<li><a href='#{f[:url]}'>#{f[:text]}</a></li>"
-    end
-  end
-
   def tags
     unless @tags.nil?
       list = @tags.inject("<span>") do |html, t|

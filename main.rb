@@ -1,10 +1,12 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/r18n'
 require 'digest/sha1'
 require 'sequel'
 
+
 configure do
-	DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
+  DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
 
 	require 'ostruct'
 	Blog = OpenStruct.new(
@@ -171,6 +173,12 @@ get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/edit/?$} do
 	post = Post.filter(:slug => URI.escape(params[:slug])).first
 	halt [ 404, "Page not found" ] unless post
 	erb :edit, :locals => { :post => post, :url => post.url }
+end
+
+get '/locales' do
+    # r18n.available_locales.map { |i| "#{i.code}: #{i.title}" }.sort.join('; ')
+  # r18n.inspect
+  l Time.now-3000, :human
 end
 
 post %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/$} do

@@ -82,9 +82,9 @@ class Post < Sequel::Model
 		dates
 	end
 
-	def show_create_at
-		created_at.strftime("%Y-%m-%d %H:%M:%S")
-	end
+	# def show_create_at
+		# created_at.strftime("%Y-%m-%d %H:%M:%S")
+  # end
 
 	########
 

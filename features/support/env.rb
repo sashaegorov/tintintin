@@ -8,7 +8,7 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
 
-Capybara.app = Main
+Capybara.app = Sinatra::Application
 
 class MainWorld
   include Capybara::DSL

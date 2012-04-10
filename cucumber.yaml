@@ -1,0 +1,4 @@
+# config/cucumber.yml
+---
+default: --quiet
+mini: --format progress

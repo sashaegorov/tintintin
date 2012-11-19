@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/r18n'
@@ -10,16 +12,16 @@ configure do
 
   require 'ostruct'
   Blog = OpenStruct.new(
-  :title => 'a scanty blog',
-  :subtitle => 'Scanty, a really small blog',
-  :author => 'John Doe',
-  :url_base => 'http://localhost:4567/',
-  :admin_password => Digest::SHA1.hexdigest('changeme'),
-  :admin_cookie_key => 'scanty_admin',
-  :admin_cookie_value => Digest::SHA1.hexdigest('51d6d976913ace58'),
-  :disqus_shortname => nil,
-  :page_size => 10,
-  :timezone => '+08:00'
+    :title => 'a scanty blog',
+    :subtitle => 'Scanty, a really small blog',
+    :author => 'John Doe',
+    :url_base => 'http://localhost:4567/',
+    :admin_password => Digest::SHA1.hexdigest('changeme'),
+    :admin_cookie_key => 'scanty_admin',
+    :admin_cookie_value => Digest::SHA1.hexdigest('51d6d976913ace58'),
+    :disqus_shortname => nil,
+    :page_size => 10,
+    :timezone => '+08:00'
   )
 end
 
@@ -158,11 +160,11 @@ post '/posts' do
   post = nil
   DB.transaction do
     post = Post.new :title => params[:title],
-    :tags => params[:tags],
-    :content => params[:content],
-    :created_at => Time.now.utc.getlocal(Blog.timezone),
-    :slug => Post.make_slug(params[:title]),
-    :format => params[:format]
+            :tags => params[:tags],
+            :content => params[:content],
+            :created_at => Time.now.utc.getlocal(Blog.timezone),
+            :slug => Post.make_slug(params[:title]),
+            :format => params[:format]
     post.save
   end
   redirect post.url
@@ -173,12 +175,6 @@ get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/edit/?$} do
   post = Post.filter(:slug => URI.escape(params[:slug])).first
   halt [ 404, "Page not found" ] unless post
   erb :edit, :locals => { :post => post, :url => post.url }
-end
-
-get '/locales' do
-  # r18n.available_locales.map { |i| "#{i.code}: #{i.title}" }.sort.join('; ')
-  # r18n.inspect
-  l Time.now-3000, :human
 end
 
 post %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/$} do

@@ -9,6 +9,7 @@ require 'sinatra/r18n'
 
 class Main < Sinatra::Base
   register Sinatra::Contrib
+  register Sinatra::R18n
 
   config_file "#{settings.root}/config.yml"
 

@@ -19,6 +19,10 @@ the starting point for your blog, too.
 * Web framework = Sinatra
 * ORM = Sequel
 
+== Under hood
+
+* HAML
+
 == Dependencies
 
   $ bundle install

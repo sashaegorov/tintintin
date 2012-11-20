@@ -1,0 +1,15 @@
+%h1 Archive
+%table.table.table-striped
+  - posts.each do |post|
+    - row = capture_haml(post) do |post|
+      %td<
+        %a{ href: post.url }= post.title
+      %td= post.created_at.strftime("%Y-%m-%d %H:%M")
+      - if post.delete?
+        %td This Blog is deleted.
+      - else
+        %td
+    - if post.delete?
+      %tr.error= row
+    - else
+      %tr= row

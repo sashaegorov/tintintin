@@ -91,7 +91,7 @@ class Main < Sinatra::Base
     else
       posts = Post.filter(:delete_status => 1).reverse_order(:created_at)
     end
-    erb :archive, :locals => { :posts => posts }, :layout => :layout
+    haml :archive, :locals => { :posts => posts }
   end
 
   get '/tags/:tag' do

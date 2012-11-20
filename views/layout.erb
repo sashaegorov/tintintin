@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <% if settings.development? %><!-- I'm layout.erb -->
+    <!-- Remove this after Haml replace ERB --><% end %>
     <meta charset="utf-8" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title><%= Blog.title %></title>

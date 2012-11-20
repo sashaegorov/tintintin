@@ -83,7 +83,7 @@ class Post < Sequel::Model
     end
     dates
   end
-  
+
   # TODO: Check whether it is used somewhere
   def show_create_at
     created_at.strftime("%Y-%m-%d %H:%M:%S")
@@ -91,13 +91,13 @@ class Post < Sequel::Model
 
   def to_html(content, format = 'txt')
     return case format
-    when 'markdown'
-      RDiscount.new(content).to_html
-    when 'textile'
-      RedCloth.new(content).to_html
-    else
-      split_content(content)
-    end
+      when 'markdown'
+        RDiscount.new(content).to_html
+      when 'textile'
+        RedCloth.new(content).to_html
+      else
+        split_content(content)
+      end
   end
 
   def split_content(string)

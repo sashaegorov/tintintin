@@ -1,11 +1,8 @@
-# encoding: utf-8
+# encoding: UTF-8
+require 'bundler'
+Bundler.require
 
-require 'sinatra/base'
-require 'sinatra/contrib'
-require 'sequel'
-require 'builder'
 require 'digest/sha1'
-require 'sinatra/r18n'
 
 class Main < Sinatra::Base
   register Sinatra::Contrib

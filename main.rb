@@ -138,7 +138,7 @@ class Main < Sinatra::Base
   ### Admin
 
   get '/auth' do
-    erb :auth, :locals => { :error => false }
+    haml :auth, :locals => { :error => false }
   end
 
   post '/auth' do
@@ -146,7 +146,7 @@ class Main < Sinatra::Base
       response.set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value)
       redirect '/'
     else
-      erb :auth, :locals => { :error => true }
+      haml :auth, :locals => { :error => true }
     end
   end
 

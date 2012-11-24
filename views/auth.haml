@@ -1,0 +1,12 @@
+%h2 Admin Auth
+- if error
+  .text-error
+    %p
+      %strong Oops! You got an error!
+      Change this and that and try again.
+.login
+  %form.form-inline{ action: "/auth", method: "post" }
+    %input.span3{ name: "password", placeholder: "Password", type: "password" }/
+    %button.btn{ type: "submit" } Login
+:javascript
+  document.forms[0].password.focus()

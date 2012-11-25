@@ -73,6 +73,7 @@ class Main < Sinatra::Base
     erb :index, :locals => { :posts => posts, :dates => Post.dates(admin?) }, :layout => :sidebar_layout
   end
 
+  # Post rendering
   get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/?$} do
     posts = nil
     if admin?
@@ -81,7 +82,7 @@ class Main < Sinatra::Base
       post = Post.filter(:delete_status => 1).filter(:slug => URI.escape(params[:slug])).first
     end
     halt [ 404, "Page not found" ] unless post
-    erb :post, :locals => { :post => post }, :layout => :layout
+    haml :post, :locals => { :post => post }
   end
 
   get '/archive' do

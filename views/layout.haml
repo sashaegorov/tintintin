@@ -15,10 +15,10 @@
     %link{ href: "/customize.css", rel: "stylesheet", type: "text/css" }/
 
   %body
-    = erb :"partial/navbar"
+    = haml :"partial/navbar"
     .container
       .content
         = yield
       %hr/
-    = erb :"partial/footer"
+    = haml :"partial/footer"
   %script{src: "http://html5shim.googlecode.com/svn/trunk/html5.js"}

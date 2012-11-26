@@ -14,13 +14,13 @@
     <link href="/customize.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <%= erb :"partial/navbar" %>
+    <%= haml :"partial/navbar" %>
     <div class="container">
       <div class="content">
         <%= yield %>
       </div>
       <hr />
     </div>
-    <%= erb :"partial/footer" %>
+    <%= haml :"partial/footer" %>
   </body>
 </html>

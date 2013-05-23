@@ -12,3 +12,4 @@ scanty:
 #     password: root
 #     host: localhost
   disqus_shortname:
+  google_analytics_id: GA-1234567-1

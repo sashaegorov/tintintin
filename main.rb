@@ -22,7 +22,7 @@ configure do
   Blog = OpenStruct.new( config["scanty"].
                          merge({
                                  :title => "Least Significant Bit",
-                                 :header => "%(ask hack learn share)"
+                                 :header => "%Q(ask hack learn share)"
                                }) )
   Sequel.connect(sequel_db_uri)
 end

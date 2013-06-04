@@ -23,11 +23,10 @@ the starting point for your blog, too.
 * ORM = Sequel
 * Full capistrano deployment: from mysql db creation to vhost creation
 
-== Dependencies
+== Installation
 
-None, everything you need is vendored: Sinatra, Sequel. And system wide RedCloth
-the reason is we are deploying to passenger, and the app fails to find some
-apache modules if ReddCloth vendored, in production is the ruby-entreprise gem
+    git clone https://github.com/joahking/scanty
+    bundle install
 
 == Setup
 
@@ -45,7 +44,6 @@ And visit: http://localhost:4567/
 Log in with the password you selected, then click New Post.  The rest should be
 self-explanatory.
 
-we are deploying to passenger, but this will still be true:
 In production, you'll probably want to run "rake start" to start (and restart)
 the server.  Change the value of "port" at the top of the Rakefile to run on a
 different port.
@@ -64,6 +62,8 @@ account and a website on Disqus (disqus.com) and enter the website shortname as
 the :disqus_shortname value in the Blog config struct.
 
 == Full deploy with passenger
+
+TODO: update this
 
 we are using capistrano and capitate for full deployment to configure a mysql db
 and set a vhost for apache passenger.

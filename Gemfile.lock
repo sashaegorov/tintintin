@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RedCloth (4.2.9)
     mysql (2.9.0)
     rack (1.5.2)
     sequel (3.48.0)
@@ -14,6 +15,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth (~> 4.2.9)
   mysql
   sequel
   sinatra (~> 1.1.1)

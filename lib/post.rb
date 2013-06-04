@@ -2,6 +2,9 @@ require 'RedCloth'
 
 module Scanty
   class Post < Sequel::Model
+
+    # according to sequel, this plugin is for testing purposes, remove it?
+    plugin :schema
     set_schema do
       primary_key :id
       text :title
@@ -11,6 +14,7 @@ module Scanty
       timestamp :created_at
     end
 
+    plugin :validation_class_methods
     validates do
       presence_of :title
       presence_of :body

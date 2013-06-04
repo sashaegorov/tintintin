@@ -3,6 +3,7 @@ GEM
   specs:
     mysql (2.9.0)
     rack (1.5.2)
+    sequel (3.48.0)
     sinatra (1.1.4)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
@@ -14,4 +15,5 @@ PLATFORMS
 
 DEPENDENCIES
   mysql
+  sequel
   sinatra (~> 1.1.1)

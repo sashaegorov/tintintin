@@ -4,7 +4,7 @@ GEM
     RedCloth (4.2.9)
     mysql (2.9.0)
     rack (1.5.2)
-    sequel (3.48.0)
+    sequel (3.7.0)
     sinatra (1.1.4)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
@@ -17,5 +17,5 @@ PLATFORMS
 DEPENDENCIES
   RedCloth (~> 4.2.9)
   mysql
-  sequel
+  sequel (= 3.7)
   sinatra (~> 1.1.1)

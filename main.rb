@@ -1,7 +1,3 @@
-require 'rubygems'
-
-# this is to load the vendored sinatra
-require File.dirname(__FILE__) + '/vendor/sinatra/lib/sinatra'
 require 'sinatra'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'

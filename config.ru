@@ -1,4 +1,4 @@
 #\ -s puma
 
 require './main'
-run Main
+run Scanty::Blog

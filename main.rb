@@ -4,7 +4,9 @@ Bundler.require
 
 require 'digest/sha1'
 
-class Main < Sinatra::Base
+module Scanty
+  class Blog < Sinatra::Base
+    
   register Sinatra::Contrib
   register Sinatra::R18n
 
@@ -209,4 +211,6 @@ class Main < Sinatra::Base
   end
 
   run! if app_file == $0
+
+end
 end

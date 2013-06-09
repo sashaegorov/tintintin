@@ -1,6 +1,5 @@
 *.log
 blog.db
-Gemfile.lock
 config.yml
 /tmp
 .DS_Store

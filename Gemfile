@@ -13,5 +13,11 @@ gem 'sequel'
 gem 'sqlite3'
 gem 'rdiscount'
 gem 'RedCloth'
-gem 'puma'
 gem 'unicode'
+
+group :development, :test do
+	gem 'puma'
+	gem 'cucumber'
+	gem 'capybara'
+	gem 'rspec'
+end

@@ -7,15 +7,16 @@ require File.join(File.dirname(__FILE__), '..', '..', 'main.rb')
 require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
+require 'r18n-core'
 
-Capybara.app = Sinatra::Application
+Capybara.app = Scanty::Blog
 
-class MainWorld
+class ScantyBlogWorld
   include Capybara::DSL
   include RSpec::Expectations
   include RSpec::Matchers
 end
 
 World do
-  MainWorld.new
+  ScantyBlogWorld.new
 end

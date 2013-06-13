@@ -40,7 +40,7 @@ helpers do
   end
 
   def auth
-    stop [ 401, 'Not authorized' ] unless admin?
+    halt [ 401, 'Not authorized' ] unless admin?
   end
 
   # this one will load all js for code highlighting
@@ -91,7 +91,7 @@ get '/past/:year/:month/:day/:slug/' do
   #FIXME doesn't this looks UNDRY?
   @tags = Scanty::Post.tags
   post = Scanty::Post.filter(:slug => params[:slug]).first
-  stop [ 404, "Page not found" ] unless post
+  halt [ 404, "Page not found" ] unless post
   @title = post.title
   erb :post, :locals => { :post => post }
 end
@@ -159,14 +159,14 @@ end
 get '/past/:year/:month/:day/:slug/edit' do
   auth
   post = Scanty::Post.filter(:slug => params[:slug]).first
-  stop [ 404, "Page not found" ] unless post
+  halt [ 404, "Page not found" ] unless post
   erb :edit, :locals => { :post => post, :url => post.url }
 end
 
 post '/past/:year/:month/:day/:slug/' do
   auth
   post = Scanty::Post.filter(:slug => params[:slug]).first
-  stop [ 404, "Page not found" ] unless post
+  halt [ 404, "Page not found" ] unless post
   post.title = params[:title]
   post.tags = params[:tags]
   post.body = params[:body]

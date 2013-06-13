@@ -1,5 +1,7 @@
 require 'yaml'
+require 'rubygems'
 require 'sinatra'
+require "sinatra/cookies"
 require 'sequel'
 
 configure do
@@ -34,7 +36,7 @@ require 'post'
 
 helpers do
   def admin?
-    request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
+    cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
   end
 
   def auth
@@ -130,7 +132,7 @@ get '/auth' do
 end
 
 post '/auth' do
-  set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value) if params[:password] == Blog.admin_password
+  cookies[Blog.admin_cookie_key] =  Blog.admin_cookie_value if params[:password] == Blog.admin_password
   redirect '/'
 end
 

@@ -14,6 +14,7 @@ module Scanty
 
   configure do
     DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
+    DB.extension(:pagination)
 
     require 'ostruct'
     Blog = OpenStruct.new(
@@ -99,8 +100,8 @@ module Scanty
 
   get '/tags/:tag' do
     tag = params[:tag]
-    posts = Post.filter(:delete_status => 1).filter(:tags.like("%#{tag}%")).reverse_order(:created_at).paginate(1, Blog.page_size)
-    erb :tagged, :locals => { :posts => posts, :tag => tag }, :layout => :layout
+    posts = Post.where(delete_status: 1).where(Sequel.like(:tags, "%#{tag}%")).reverse_order(:created_at).paginate(1, Blog.page_size)
+    erb :tagged, locals: { posts: posts, tag: tag }, layout: :layout
   end
 
   get '/page/:page' do
@@ -111,7 +112,7 @@ module Scanty
 
   get '/tags/:tag/page/:page' do
     tag = params[:tag]
-    posts = Post.filter(:delete_status => 1).filter(:tags.like("%#{tag}%")).reverse_order(:created_at).paginate(params[:page].to_i, Blog.page_size)
+    posts = Post.filter(delete_status: 1).filter(:tags.like("%#{tag}%")).reverse_order(:created_at).paginate(params[:page].to_i, Blog.page_size)
     redirect '/' if posts.page_count < params[:page].to_i
     erb :tagged, :locals => { :posts => posts, :tag => tag }, :layout => :layout
   end

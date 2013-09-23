@@ -18,16 +18,16 @@ module Scanty
 
     require 'ostruct'
     Blog = OpenStruct.new(
-      :title => settings.title,
-      :subtitle => settings.subtitle,
-      :author => settings.author,
-      :url_base => settings.url_base,
-      :admin_password => Digest::SHA1.hexdigest(settings.admin_password),
-      :admin_cookie_key => settings.admin_cookie_key,
-      :admin_cookie_value => Digest::SHA1.hexdigest(settings.admin_cookie_value),
-      :disqus_shortname => settings.disqus_shortname ||= nil,
-      :page_size => settings.page_size.to_i,
-      :timezone => settings.timezone
+      title: settings.title,
+      subtitle: settings.subtitle,
+      author: settings.author,
+      url_base: settings.url_base,
+      admin_password: Digest::SHA1.hexdigest(settings.admin_password),
+      admin_cookie_key: settings.admin_cookie_key,
+      admin_cookie_value: Digest::SHA1.hexdigest(settings.admin_cookie_value),
+      disqus_shortname: settings.disqus_shortname ||= nil,
+      page_size: settings.page_size.to_i,
+      timezone: settings.timezone
     )
   end
 
@@ -72,20 +72,20 @@ module Scanty
   ### Public
 
   get '/' do
-    posts = Post.filter(:delete_status => 1).reverse_order(:created_at).paginate(1, Blog.page_size)
-    erb :index, :locals => { :posts => posts, :dates => Post.dates(admin?) }, :layout => :sidebar_layout
+    posts = Post.filter(delete_status: 1).reverse_order(:created_at).paginate(1, Blog.page_size)
+    erb :index, locals: { posts: posts, dates: Post.dates(admin?) }, layout: :sidebar_layout
   end
 
   # Post rendering
   get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/?$} do
     posts = nil
     if admin?
-      post = Post.filter(:slug => URI.escape(params[:slug])).first
+      post = Post.filter(slug: URI.escape(params[:slug])).first
     else
-      post = Post.filter(:delete_status => 1).filter(:slug => URI.escape(params[:slug])).first
+      post = Post.filter(delete_status: 1).filter(slug: URI.escape(params[:slug])).first
     end
     halt [ 404, "Page not found" ] unless post
-    haml :post, :locals => { :post => post }
+    haml :post, locals: { post: post }
   end
 
   get '/archive' do
@@ -93,9 +93,9 @@ module Scanty
     if admin?
       posts = Post.reverse_order(:created_at)
     else
-      posts = Post.filter(:delete_status => 1).reverse_order(:created_at)
+      posts = Post.filter(delete_status: 1).reverse_order(:created_at)
     end
-    haml :archive, :locals => { :posts => posts }
+    haml :archive, locals: { posts: posts }
   end
 
   get '/tags/:tag' do
@@ -105,21 +105,21 @@ module Scanty
   end
 
   get '/page/:page' do
-    posts = Post.filter(:delete_status => 1).reverse_order(:created_at).paginate(params[:page].to_i, Blog.page_size)
+    posts = Post.filter(delete_status: 1).reverse_order(:created_at).paginate(params[:page].to_i, Blog.page_size)
     redirect '/' if posts.page_count < params[:page].to_i
-    erb :index, :locals => { :posts => posts, :dates => Post.dates(admin?) }, :layout => :sidebar_layout
+    erb :index, locals: { posts: posts, dates: Post.dates(admin?) }, layout: :sidebar_layout
   end
 
   get '/tags/:tag/page/:page' do
     tag = params[:tag]
     posts = Post.filter(delete_status: 1).filter(:tags.like("%#{tag}%")).reverse_order(:created_at).paginate(params[:page].to_i, Blog.page_size)
     redirect '/' if posts.page_count < params[:page].to_i
-    erb :tagged, :locals => { :posts => posts, :tag => tag }, :layout => :layout
+    erb :tagged, locals: { posts: posts, tag: tag }, layout: :layout
   end
 
   get %r{/(?:rss|feed)(?:.xml)?} do
-    @posts = Post.filter(:delete_status => 1).reverse_order(:created_at).limit(20)
-    content_type 'application/atom+xml', :charset => 'utf-8'
+    @posts = Post.filter(delete_status: 1).reverse_order(:created_at).limit(20)
+    content_type 'application/atom+xml', charset: 'utf-8'
     builder :feed
   end
 
@@ -128,7 +128,7 @@ module Scanty
     if admin?
       all_posts = Post.reverse_order(:created_at)
     else
-      all_posts = Post.filter(:delete_status => 1).reverse_order(:created_at)
+      all_posts = Post.filter(delete_status: 1).reverse_order(:created_at)
     end
 
     posts = []
@@ -136,13 +136,13 @@ module Scanty
       posts << post if post.created_at.strftime("%Y") == params[:year] and post.created_at.strftime("%m") == params[:month]
     end
 
-    erb :archive, :locals => { :posts => posts }, :layout => :layout
+    erb :archive, locals: { posts: posts }, layout: :layout
   end
 
   ### Admin
 
   get '/auth' do
-    haml :auth, :locals => { :error => false }
+    haml :auth, locals: { error: false }
   end
 
   post '/auth' do
@@ -150,7 +150,7 @@ module Scanty
       response.set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value)
       redirect '/'
     else
-      haml :auth, :locals => { :error => true }
+      haml :auth, locals: { error: true }
     end
   end
 
@@ -161,19 +161,19 @@ module Scanty
 
   get '/posts/new' do
     auth
-    erb :edit, :locals => { :post => Post.new, :url => '/posts' }
+    erb :edit, locals: { post: Post.new, url: '/posts' }
   end
 
   post '/posts' do
     auth
     post = nil
     DB.transaction do
-      post = Post.new :title => params[:title],
-              :tags => params[:tags],
-              :content => params[:content],
-              :created_at => Time.now.utc.getlocal(Blog.timezone),
-              :slug => Post.make_slug(params[:title]),
-              :format => params[:format]
+      post = Post.new title: params[:title],
+              tags: params[:tags],
+              content: params[:content],
+              created_at: Time.now.utc.getlocal(Blog.timezone),
+              slug: Post.make_slug(params[:title]),
+              format: params[:format]
       post.save
     end
     redirect post.url
@@ -181,9 +181,9 @@ module Scanty
 
   get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/edit/?$} do
     auth
-    post = Post.filter(:slug => URI.escape(params[:slug])).first
+    post = Post.filter(slug: URI.escape(params[:slug])).first
     halt [ 404, "Page not found" ] unless post
-    erb :edit, :locals => { :post => post, :url => post.url }
+    erb :edit, locals: { post: post, url: post.url }
   end
 
   post %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/$} do
@@ -191,7 +191,7 @@ module Scanty
     delete_status = params[:delete_status] ? 0 : 1
     post = nil
     DB.transaction do
-      post = Post.filter(:slug => URI.escape(params[:slug])).first
+      post = Post.filter(slug: URI.escape(params[:slug])).first
       halt [ 404, "Page not found" ] unless post
       unless params[:delete_status]
         post.title = params[:title]

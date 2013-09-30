@@ -10,6 +10,9 @@ module Scanty
   register Sinatra::Contrib
   register Sinatra::R18n
 
+  # http://www.sinatrarb.com/contrib/config_file.html
+  # TODO: Merge config with 'Blog' ostruct
+  # TODO: Better setting
   config_file "#{settings.root}/config.yml"
 
   configure do
@@ -42,6 +45,7 @@ module Scanty
     "Application error"
   end
 
+  # TODO: Put this in correct place.
   $LOAD_PATH.unshift("#{settings.root}/lib")
   require 'post'
 
@@ -174,11 +178,13 @@ module Scanty
               created_at: Time.now.utc.getlocal(Blog.timezone),
               slug: Post.make_slug(params[:title]),
               format: params[:format]
+      # TODO: Add begin/rescue?
       post.save
     end
     redirect post.url
   end
 
+  # TODO: Do it better?
   get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/edit/?$} do
     auth
     post = Post.filter(slug: URI.escape(params[:slug])).first

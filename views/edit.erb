@@ -1,5 +1,6 @@
 <form action="<%= url %>" method="post" name="edit">
   <fieldset>
+    <% # TODO: Play with post.id.nil? %>
     <label for="title">Title</label>
     <input type="text" id="title" name="title" value="<%= post.title %>" placeholder="title" class="span5" />
     <% if post.created_at %>
@@ -38,6 +39,7 @@
       </div>
     <% end %>
     <div class="form-actions">
+      <% # TODO: Add post.id.nil? logic i.e. "Creat" vs. "Save" button %>
       <button type="submit" class="btn btn-primary">Save</button>
       <% if post.created_at %>
         <a href="<%= post.url %>" class="btn">Back</a>

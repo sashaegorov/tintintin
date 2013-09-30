@@ -50,6 +50,13 @@ class Post < Sequel::Model
     @more
   end
 
+  def self.tags
+    # TODO: Check is it been used some were.
+    map(:tags).compact. # nils out
+    collect { |t| t.split(',') }.flatten.uniq. # unique tags in 1-dim array
+    collect { |t| t.strip }.sort # around spaces out and sorting
+  end
+
   def linked_tags
     tags.split.inject([]) do |accum, tag|
       accum << "<a href=\"/tags/#{tag}\">#{tag}</a>"
@@ -57,6 +64,7 @@ class Post < Sequel::Model
   end
 
   def self.make_slug(title)
+    # TODO: Check how does this work with non-latin letters
     slug = URI.escape(title.downcase.gsub(/[ _]/, '-')).gsub(/[^a-zA-Z0-9%\-]/, '').squeeze('-')
     unless Post.filter(:slug => slug).first
       slug
@@ -91,13 +99,13 @@ class Post < Sequel::Model
 
   def to_html(content, format = 'txt')
     return case format
-      when 'markdown'
-        RDiscount.new(content).to_html
-      when 'textile'
-        RedCloth.new(content).to_html
-      else
-        split_content(content)
-      end
+    when 'markdown'
+      RDiscount.new(content).to_html
+    when 'textile'
+      RedCloth.new(content).to_html
+    else
+      split_content(content)
+    end
   end
 
   def split_content(string)
@@ -123,6 +131,21 @@ class Post < Sequel::Model
       end
     end
     show_html
+  end
+
+  # TODO: Refactor!
+  def split_content2(string)
+    parts = string.gsub(/\r/, '').split("\n\n")
+    show = []
+    hide = []
+    parts.each do |part|
+      if show.join.length < 100
+        show << part
+      else
+        hide << part
+      end
+    end
+    [ to_html(show.join("\n\n")), hide.size > 0 ]
   end
 
 end

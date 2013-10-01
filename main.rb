@@ -77,7 +77,7 @@ module Scanty
 
   get '/' do
     posts = Post.filter(delete_status: 1).reverse_order(:created_at).paginate(1, Blog.page_size)
-    erb :index, locals: { posts: posts, dates: Post.dates(admin?) }, layout: :sidebar_layout
+    haml :index, locals: { posts: posts, dates: Post.dates(admin?) }, layout: :sidebar_layout
   end
 
   # Post rendering
@@ -111,7 +111,7 @@ module Scanty
   get '/page/:page' do
     posts = Post.filter(delete_status: 1).reverse_order(:created_at).paginate(params[:page].to_i, Blog.page_size)
     redirect '/' if posts.page_count < params[:page].to_i
-    erb :index, locals: { posts: posts, dates: Post.dates(admin?) }, layout: :sidebar_layout
+    haml :index, locals: { posts: posts, dates: Post.dates(admin?) }, layout: :sidebar_layout
   end
 
   get '/tags/:tag/page/:page' do
@@ -140,7 +140,7 @@ module Scanty
       posts << post if post.created_at.strftime("%Y") == params[:year] and post.created_at.strftime("%m") == params[:month]
     end
 
-    erb :archive, locals: { posts: posts }, layout: :layout
+    haml :archive, locals: { posts: posts }, layout: :layout
   end
 
   ### Admin

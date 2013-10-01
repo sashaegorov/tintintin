@@ -1,3 +1,6 @@
+<% if post.created_at.nil? %>
+<h2>Create new post</h2>
+<% end %>
 <form action="<%= url %>" method="post" name="edit">
   <fieldset>
     <% # TODO: Play with post.id.nil? %>

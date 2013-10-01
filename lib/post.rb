@@ -66,7 +66,7 @@ class Post < Sequel::Model
   def self.make_slug(title)
     # TODO: Check how does this work with non-latin letters
     slug = URI.escape(title.downcase.gsub(/[ _]/, '-')).gsub(/[^a-zA-Z0-9%\-]/, '').squeeze('-')
-    unless Post.filter(:slug => slug).first
+    unless Post.filter(slug: slug).first
       slug
     else
       count = Post.filter(:slug.like("#{slug}-%")).count + 1
@@ -84,7 +84,7 @@ class Post < Sequel::Model
     if admin
       posts = Post.reverse_order(:created_at)
     else
-      posts = Post.filter(:delete_status => 1).reverse_order(:created_at)
+      posts = Post.filter(delete_status: 1).reverse_order(:created_at)
     end
     posts.each do |post|
       dates[post.created_at.strftime("%Y/%m")] = post.created_at.strftime("%Y-%m") unless dates[post.created_at.strftime("%Y/%m")]

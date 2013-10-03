@@ -1,44 +1,58 @@
-# we are deploying with capistrano you don't need rake start/stop tasks
-# for details check Capfile
-#TODO remove these unneeded tasks
-port = 3030
+# encoding: UTF-8
 
-desc "Start the app server"
-task :start => :stop do
-  puts "Starting the blog"
-  system "ruby main.rb -p #{port} > access.log 2>&1 &"
-end
+pid_file = File.expand_path('tintintin.pid')
 
-# code lifted from rush
-def process_alive(pid)
+def alive?(pid)
   ::Process.kill(0, pid)
   true
 rescue Errno::ESRCH
   false
 end
 
-def kill_process(pid)
+def shutdown(pid)
+  puts 'Stopping Tintintin application...'
   ::Process.kill('TERM', pid)
-
   5.times do
-    return if !process_alive(pid)
-    sleep 0.5
+    return if !alive?(pid)
+    sleep 2
     ::Process.kill('TERM', pid) rescue nil
   end
-
   ::Process.kill('KILL', pid) rescue nil
 rescue Errno::ESRCH
 end
 
-desc "Stop the app server"
-task :stop do
-  m = `netstat -lptn | grep 0.0.0.0:#{port}`.match(/LISTEN\s*(\d+)/)
-  if m
-    pid = m[1].to_i
-    puts "Killing old server #{pid}"
-    kill_process(pid)
+desc 'Start Tintintin application'
+task :start do
+  require 'rack'
+  Rack::Server.start (options={config: 'config.ru'})
+end
+
+namespace :start do
+  desc 'Start Tintintin application in background'
+  task :background do
+    pid = fork do
+      require 'rack'
+      Rack::Server.start (options={
+        config: 'config.ru',
+        pid: pid_file
+      })
+    end
   end
 end
+
+desc 'Stop Tintintin application'
+task :stop do
+  pid = ::File.read(pid_file).to_i
+  if pid
+    shutdown(pid)
+  end
+end
+
+# TODO:
+# desc 'Run Cucumber'
+# task :default => [:cucmber]
+
+# TODO: check task below
 
 task :environment do
   require 'main'

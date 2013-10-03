@@ -22,16 +22,15 @@ Clone! All dependencies managed by Bundler with care:
     $ bundle install
 
 ## Run it
+Following run options available:
 
-[Run](http://localhost:4567) the server quick and dirty:
+    $ ruby main.rb # http://localhost:4567
+    $ rackup # http://localhost:9292
+    $ rake start # the same as above
 
-    $ ruby main.rb
+Also available `rake start:background` and `rake stop` tasks.
 
-[Or](http://localhost:9292) using `rackup`
-
-    $ rackup 
-
-Log in with the password you selected, then click `New Post`. The rest should be self-explanatory.
+Finally log in using the password you selected, then click `New Post`. The rest should be self-explanatory.
 
 ## Customize it
 

@@ -4,8 +4,6 @@
       %a{ href: post.url }= post[:title]
     %p.post-meta>
       = l post.created_at, :human
-      -# TODO: Make this anouther way
-      &nbsp;|&nbsp;
       %small Posted in
       = post.linked_tags
   .post-content

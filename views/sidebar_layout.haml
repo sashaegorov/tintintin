@@ -21,7 +21,8 @@
           .row-fluid
             .span9.content
               = yield
-              = erb :"partial/disqus_num_replies"
+              -# TODO: Check actual Disqus
+              = haml :"partial/disqus_num_replies"
               = paginate(posts)
             .span3
               .well

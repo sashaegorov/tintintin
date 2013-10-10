@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Sinatra and friends
 gem 'sinatra', require: 'sinatra/base'
@@ -24,5 +24,6 @@ group :development, :test do
   gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
   gem 'guard-livereload'
   gem 'guard-cucumber'
+  gem 'guard-shell'
   gem 'terminal-notifier-guard'
 end

@@ -165,7 +165,7 @@ module Scanty
 
   get '/posts/new' do
     auth
-    erb :edit, locals: { post: Post.new, url: '/posts' }
+    haml :edit, locals: { post: Post.new, url: '/posts' }
   end
 
   post '/posts' do
@@ -189,7 +189,7 @@ module Scanty
     auth
     post = Post.filter(slug: URI.escape(params[:slug])).first
     halt [ 404, "Page not found" ] unless post
-    erb :edit, locals: { post: post, url: post.url }
+    haml :edit, locals: { post: post, url: post.url }
   end
 
   post %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/$} do

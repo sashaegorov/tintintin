@@ -1,32 +1,32 @@
-- if post.created_at.nil?
+- if post.id.nil?
   %h2 Create new post
-%form{:action => url, :method => "post", :name => "edit"}
+%form{action: url, method: 'post', name: 'edit'}
   %fieldset
-    - # TODO: Play with post.id.nil?
-    %label{:for => "title"} Title
-    %input#title.span5{:name => "title", :placeholder => "title", :type => "text", :value => post.title}/
+    %label{for: 'title'} Title
+    %input#title.span5{name: 'title', placeholder: 'Enter title for new post', type: 'text', value: post.title}/
     - if post.created_at
       .control-group.error
         .controls
           %label.checkbox.inline
-            %input#change_slug{:name => "change_slug", :type => "checkbox", :value => "true"}/
-            %span.help-inline If you want to change this blog's url to some to title,just check it.
-    %label{:for => "tags"} Tags
-    %input#tags.span3{:name => "tags", :placeholder => "Tags", :type => "text", :value => post.tags}/
+            %input#change_slug{name: 'change_slug', type: 'checkbox', value: 'true'}/
+            %span.help-inline If you want to change this blog's url to some to title, just check it.
+    %label{for: 'tags'} Tags
+    %input#tags.span3{name: 'tags', placeholder: 'Tags', type: 'text', value: post.tags}/
     %span.text-info Split by space
-    %label{:for => "content"} Content
-    %textarea#content.input-block-level{:name => "content", :placeholder => "Content", :rows => "18"}= post.content
+    %label{for: 'content'} Content
+    %textarea#content.input-block-level{name: 'content', placeholder: 'Content', rows: '12'}= post.content
     - if post.created_at
-      %span.help-block
-        Created at:&nbsp;#{post.created_at}
-    %label{:for => "format"} Format
-    %select{:name => "format"}
-      %option{:value => "markdown", :selected => post.format == "markdown"} Markdown
-      %option{:value => "textile",  :selected => post.format == "textile"} Textile
-      %option{:value => "txt",      :selected => post.format == "txt"    } Plain Text
+      %span.help-block<
+        %strong Created at:&nbsp;
+        =l post.created_at, :standard
+    %label{for: 'format'} Format
+    %select{name: 'format'}
+      %option{value: 'markdown', selected: post.format == 'markdown'} Markdown
+      %option{value: 'textile',  selected: post.format == 'textile'} Textile
+      %option{value: 'txt',      selected: post.format == 'txt'    } Plain Text
     - if post.created_at
       %label
-        %strong Delete?
+        %strong Hide?
       .control-group.error
         .controls
           %label.checkbox.inline
@@ -34,12 +34,12 @@
             - # add "Delete" button and 'delete' method
             - # TODO: Convert to "Hide" button on the top
             - # TODO: Add hidded logic to template
-            %input#delete_status{:type => 'checkbox', :name => 'delete_status', :value => 'true', :checked => post.delete?}
-            %span.help-inline Mark post as deleted
+            %input#delete_status{type: 'checkbox', name: 'delete_status', value: 'true', checked: post.delete?}
+            %span.help-inline Mark post as hidden
     .form-actions
     - # TODO: Add post.id.nil? logic i.e. "Creat" vs. "Save" button
-    %button.btn.btn-primary{:type => "submit"} Save
+    %button.btn.btn-primary{type: 'submit'} Save
     - if post.created_at
-      %a.btn{:href => post.url} Back
+      %a.btn{href: post.url} Back
     - else
-      %button.btn{:type => "reset"} Reset
+      %button.btn{type: 'reset'} Reset

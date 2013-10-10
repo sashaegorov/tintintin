@@ -16,9 +16,11 @@ Feature: posts
       Then I follow "Create new post"
         And I should see "Create new post"
 
-    # Create new simple post with Markdown
+    # Create new simple post
     Then I follow "New post"
-      And I fill in "title" with "Test title"
+    And I should not see "If you want to change this blog's url to some to title"
+    And I should not see "Mark post as hidden"
+      Then I fill in "title" with "Test title"
       And I fill in "tags" with "supertag dupertag"
       And I fill in "content" with "  - I am a list"
       And I select "Markdown" from "format"
@@ -27,4 +29,8 @@ Feature: posts
         And I should see "supertag"
         And I should see "dupertag"
         And I should see "I am a list" within "li"
-        And I should not see "Oops! You got an error!"
+
+    # Edit simple post
+    Then I follow "Edit"
+      And I should see "If you want to change this blog's url to some to title"
+      And I should see "Mark post as hidden"

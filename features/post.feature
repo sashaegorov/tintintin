@@ -24,7 +24,7 @@ Feature: posts
       And I fill in "tags" with "supertag dupertag"
       And I fill in "content" with "  - I am a list"
       And I select "Markdown" from "format"
-      Then I press "Save"
+      Then I press "Create"
         And I should see "Test title" within "h3"
         And I should see "supertag"
         And I should see "dupertag"

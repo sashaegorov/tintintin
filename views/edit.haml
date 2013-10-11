@@ -4,7 +4,7 @@
   %fieldset
     %label{for: 'title'} Title
     %input#title.span5{name: 'title', placeholder: 'Enter title for new post', type: 'text', value: post.title}/
-    - if post.created_at
+    - unless post.id.nil?
       .control-group.error
         .controls
           %label.checkbox.inline
@@ -32,14 +32,17 @@
           %label.checkbox.inline
             - # TODO: Add complete delete logic
             - # add "Delete" button and 'delete' method
-            - # TODO: Convert to "Hide" button on the top
-            - # TODO: Add hidded logic to template
             %input#delete_status{type: 'checkbox', name: 'delete_status', value: 'true', checked: post.delete?}
             %span.help-inline Mark post as hidden
     .form-actions
-    - # TODO: Add post.id.nil? logic i.e. "Creat" vs. "Save" button
-    %button.btn.btn-primary{type: 'submit'} Save
-    - if post.created_at
+    - unless post.id.nil?
+      %button.btn.btn-primary{type: 'submit'} Save
       %a.btn{href: post.url} Back
+      - # TODO: Add client/server logic
+      -# - if post.delete?
+      -#   %button.btn{type: 'button'} Unhide
+      -# - else
+      -#   %button.btn{type: 'button'} Hide
     - else
+      %button.btn.btn-primary{type: 'submit'} Create
       %button.btn{type: 'reset'} Reset

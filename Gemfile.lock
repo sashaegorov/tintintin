@@ -119,7 +119,6 @@ DEPENDENCIES
   guard-shell
   haml
   puma
-  rb-fsevent
   rdiscount
   rspec
   sequel

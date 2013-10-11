@@ -10,6 +10,8 @@ module Scanty
   register Sinatra::Contrib
   register Sinatra::R18n
 
+  # TODO: Error pages
+
   # http://www.sinatrarb.com/contrib/config_file.html
   # TODO: Merge config with 'Blog' ostruct
   # TODO: Better setting

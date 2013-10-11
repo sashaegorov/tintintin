@@ -21,7 +21,8 @@ group :development, :test do
 	gem 'capybara'
 	gem 'rspec'
   # Mac only. Requred to improve performance
-  gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
+  # TODO: Check is it still necessary
+  # gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
   gem 'guard-livereload'
   gem 'guard-cucumber'
   gem 'guard-shell'

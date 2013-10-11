@@ -34,3 +34,29 @@ Feature: posts
     Then I follow "Edit"
       And I should see "If you want to change this blog's url to some to title"
       And I should see "Mark post as hidden"
+
+  Scenario: I create posts and see correct slugs
+    Given I am on the admin auth
+    Then I should see "Admin Auth"
+    Then I fill in "password" with "changeme"
+      Then I press "Login"
+    # Check slug
+    Given I am on the homepage
+    # Almost normal page title
+    Then I follow "New post"
+      Then I fill in "title" with "Object-Oriented File Manipulation"
+      Then I press "Create"
+        And I should have "object-oriented-file-manipulation" in path
+    # Abnormal page title
+    Then I follow "New post"
+      Then I fill in "title" with "_Rest+Client ~0.8…"
+      Then I press "Create"
+        And I should have "/restclient-08/" in path
+    # Non-ASCII page title
+    Then I follow "New post"
+      Then I fill in "title" with "_ *Привет*!"
+      Then I press "Create"
+        And I should have "/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82/" in path
+        And I should have "/привет/" in unescaped path
+    # TODO: Check Unicode normalized titles
+    # TODO: Check two Posts with same titles

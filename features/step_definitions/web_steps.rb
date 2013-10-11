@@ -218,6 +218,23 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   end
 end
 
+# Example:
+# And I should have "/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82/" in path
+# And I should have "/привет/" in unescaped path
+Then /^(?:|I )should have "([^\"]*)" in( unescaped)? path$/ do |pattern, unescaped|
+  unless unescaped
+    path = URI.parse(current_url).path
+  else
+    path = CGI::unescape URI.parse(current_url).path
+  end
+
+  if path.respond_to? :should
+    path.should have_content(pattern)
+  else
+    assert path.has_content?(pattern)
+  end
+end
+
 Then /^show me the page$/ do
   save_and_open_page
 end

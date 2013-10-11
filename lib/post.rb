@@ -64,8 +64,14 @@ class Post < Sequel::Model
   end
 
   def self.make_slug(title)
-    # TODO: Check how does this work with non-latin letters
-    slug = URI.escape(title.downcase.gsub(/[ _]/, '-')).gsub(/[^a-zA-Z0-9%\-]/, '').squeeze('-')
+    # TODO: Ewwww. Make it better
+    # TODO: Implement Unicode normalization
+    # Unicode-safe lowercase
+    slug = Unicode::downcase(title).gsub(/[ _]/, '-')
+    # Replace all non-alphanumeric with dash
+    slug = slug.gsub(/[^[[:alnum:]]%\-]/u, '').gsub(/^\-/, '')
+    slug = slug.gsub(/^\-/, '')
+    slug = CGI::escape slug
     unless Post.filter(slug: slug).first
       slug
     else

@@ -1,10 +1,10 @@
-Feature: posts
-  Scenario: No posts, I'm logged out
+Feature: Blog Posts
+  Scenario: No posts, I am logged out
     Given I am on the homepage
     Then I should see "Looks like this is a fresh install of Scanty."
       Then I should not see "New post"
 
-  Scenario: I'm logged in, no posts
+  Scenario: I am logged in, no posts
     Given I am on the admin auth
     Then I should see "Admin Auth"
     Then I fill in "password" with "changeme"
@@ -59,4 +59,14 @@ Feature: posts
         And I should have "/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82/" in path
         And I should have "/привет/" in unescaped path
     # TODO: Check Unicode normalized titles
-    # TODO: Check two Posts with same titles
+    # Non-ASCII page title
+    Given I am on the homepage
+    Then I follow "New post"
+      Then I fill in "title" with "Привет мир"
+      Then I press "Create"
+        And I should have "/привет-мир/" in unescaped path
+    Given I am on the homepage
+    Then I follow "New post"
+      Then I fill in "title" with "Привет мир"
+      Then I press "Create"
+        And I should have "/привет-мир-2/" in unescaped path

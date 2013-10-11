@@ -83,6 +83,10 @@ module Scanty
   end
 
   # Post rendering
+  # FIXME: The following link should not have the same content:
+  # - /2013/10/11/hello-world/
+  # - /2013/10/11/hello-world
+  # One of them should have 301 redrect to another one
   get %r{^/\d{4}/\d{2}/\d{2}/(?<slug>[a-zA-Z0-9%\-]+)/?$} do
     posts = nil
     if admin?
@@ -141,7 +145,6 @@ module Scanty
     all_posts.each do |post|
       posts << post if post.created_at.strftime("%Y") == params[:year] and post.created_at.strftime("%m") == params[:month]
     end
-
     haml :archive, locals: { posts: posts }, layout: :layout
   end
 

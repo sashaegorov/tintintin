@@ -1,8 +1,3 @@
-# encoding: utf-8
-
-require 'rdiscount'
-require 'redcloth'
-
 class Post < Sequel::Model
   include Rack::Utils
   alias_method :h, :escape_html
@@ -11,6 +6,7 @@ class Post < Sequel::Model
   plugin :schema
 
   unless table_exists?
+    # TODO: Add server side validators for each field
     set_schema do
       primary_key :id
       text :title, :null=>false
@@ -75,7 +71,7 @@ class Post < Sequel::Model
     unless Post.filter(slug: slug).first
       slug
     else
-      count = Post.filter(:slug.like("#{slug}-%")).count + 1
+      count = Post.where(Sequel.like(:slug, "#{slug}-%")).count + 1
       "#{slug}-#{(count + 1)}"
     end
   end

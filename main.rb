@@ -1,16 +1,17 @@
 # encoding: UTF-8
+# TODO: Error pages
+
 require 'bundler'
 Bundler.require
 
 require 'digest/sha1'
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
 
 module Scanty
   class Blog < Sinatra::Base
     
   register Sinatra::Contrib
   register Sinatra::R18n
-
-  # TODO: Error pages
 
   # http://www.sinatrarb.com/contrib/config_file.html
   # TODO: Merge config with 'Blog' ostruct
@@ -20,6 +21,7 @@ module Scanty
   configure do
     DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
     DB.extension(:pagination)
+    require 'post'
 
     require 'ostruct'
     Blog = OpenStruct.new(
@@ -46,10 +48,6 @@ module Scanty
     puts e.backtrace.join("\n")
     "Application error"
   end
-
-  # TODO: Put this in correct place.
-  $LOAD_PATH.unshift("#{settings.root}/lib")
-  require 'post'
 
   helpers do
     def admin?
@@ -183,7 +181,6 @@ module Scanty
               created_at: Time.now.utc.getlocal(Blog.timezone),
               slug: Post.make_slug(params[:title]),
               format: params[:format]
-      # TODO: Add begin/rescue?
       post.save
     end
     redirect post.url

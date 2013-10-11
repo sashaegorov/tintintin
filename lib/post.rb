@@ -94,11 +94,6 @@ class Post < Sequel::Model
     dates
   end
 
-  # TODO: Check whether it is used somewhere
-  def show_create_at
-    created_at.strftime("%Y-%m-%d %H:%M:%S")
-  end
-
   def to_html(content, format = 'txt')
     return case format
     when 'markdown'

@@ -1,5 +1,4 @@
 # encoding: UTF-8
-# TODO: Error pages
 
 require 'bundler'
 Bundler.require
@@ -9,13 +8,15 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
 
 module Scanty
   class Blog < Sinatra::Base
-    
+
   register Sinatra::Contrib
   register Sinatra::R18n
 
+  # FIXME: Better settings
+  # 1. app_config.yml for sinatra's `settings.*` depenging on DEV/TEST/PROD)
   # http://www.sinatrarb.com/contrib/config_file.html
-  # TODO: Merge config with 'Blog' ostruct
-  # TODO: Better setting
+  # 2. blog_config.yml for blog's `OpenStruct.*`
+  # Merge blog config with 'Blog' ostruct
   config_file "#{settings.root}/config.yml"
 
   configure do
@@ -24,6 +25,8 @@ module Scanty
     require 'post'
 
     require 'ostruct'
+
+    # FIXME: My eyes!
     Blog = OpenStruct.new(
       title: settings.title,
       subtitle: settings.subtitle,
@@ -42,6 +45,7 @@ module Scanty
     register Sinatra::Reloader
   end
 
+  # TODO: User friendly error pages, possible dynamic
   error do
     e = request.env['sinatra.error']
     puts e.to_s
@@ -54,10 +58,12 @@ module Scanty
       request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
     end
 
+    # TODO: Redirect to login page?
     def auth
       halt [ 401, 'Not authorized' ] unless admin?
     end
 
+    # TODO: This is pain
     def paginate(post, options={})
       return "" if post.page_count == 1
       html = '<div class="paginate">'

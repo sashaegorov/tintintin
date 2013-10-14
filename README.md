@@ -1,22 +1,27 @@
 # Tintintin (ex. *Scanty*), a small blog
 
-_Tintintin_ is understandable blogging software. It’s small and easily modifiable. _Tintintin_ is former [Scanty](https://github.com/adamwiggins/scanty). I <del>still changing</del> have changed some of features and most of under hood stuff.
+_Tintintin_ is simple blogging software. It’s small and easily modifiable. _Tintintin_ is former [Scanty](https://github.com/adamwiggins/scanty). I <del>still changing</del> have changed some of features and most of under hood stuff.
 
 ## Features
-* Posts (OMG!)
-* Tags
-* [Disqus](http://www.disqus.com) comments
-* Markdown (via Discount) and Textile (via RedCloth)
-* Atom feed
+ - Posts (OMG!)
+ - [Disqus](http://www.disqus.com) comments
+ - Markdown (via Discount) and Textile (via RedCloth)
+ - Atom feed
+ - Tags
+
+**TODO:** Perform update according list below
+
+ 1. Review features
+ 2. Link each feature to related Cucumber feature file i.e. `Posts` item to `post.feature`.
 
 ## Guts
-* Haml
-* _Sinatra_ as web framework
-* _Sequel_ as ORM
-* <del>Zurb Foundation</del>
+ - **Sinatra** as web framework
+ - **Sequel** as ORM
+ - <del>Erb</del> **Haml** as markup language
+ - <del>Bootstrap</del> **Zurb Foundation** as front end framework (work in progress)
 
 ## Get it
-Clone! All dependencies managed by Bundler with care:
+Clone! All dependencies carefully managed by Bundler with care:
 
     $ git clone https://github.com/qatsi/tintintin
     $ bundle install
@@ -24,13 +29,13 @@ Clone! All dependencies managed by Bundler with care:
 ## Run it
 Following run options available:
 
-    $ ruby main.rb # http://localhost:4567
-    $ rackup # http://localhost:9292
     $ rake start # the same as above
+    $ rackup # http://localhost:9292    
+    $ ruby main.rb # http://localhost:4567
 
 Also available `rake start:background` and `rake stop` tasks.
 
-Finally log in using the password you selected, then click `New Post`. The rest should be self-explanatory.
+Finally, log in using the password you selected, then click `New Post`. The rest should be self-explanatory.
 
 ## Customize it
 
@@ -43,18 +48,12 @@ TODO: Example
 
 ## Database
 
-The default is a SQLite file named blog.db. To use something else, see
-config.yml.sample or change uri at the top of main.rb
+The default is a SQLite, file named `blog.db`. To use something else, set DATABASE_URL in your environment when running the app, i.e.:
 
-The database will be created automatically when the server is executed.
-## Database
+    $ DATABASE_URL='mysql://localhost/myblog' ruby main.rb
 
-The default is a SQLite file named blog.db. To use something else, set DATABASE_URL in your environment when running the app, i.e.:
-
-$ DATABASE_URL='mysql://localhost/myblog' ruby main.rb
-Or, modify the Sequel.connect statement at the top of main.rb.
-
-The database will be created automatically when the server is executed.
+Don't modify the Sequel.connect statement at the top of main.rb. It's bad.
+All necessary tables will be created automatically when the server is executed.
 
 ## Add comments
 There are no comments by default. If you wish to activate comments, create an account and a website on [Disqus](http://www.disqus.com) and enter the website shortname as the **:disqus_shortname** value in the Blog config struct.

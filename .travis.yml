@@ -1,8 +1,6 @@
 language: ruby
 
-script: cucumber
+script: bundle exec cucumber
 
 rvm:
-  - 1.9.2
-  - 1.9.3
-  - ruby-head
+  - '1.9.3'

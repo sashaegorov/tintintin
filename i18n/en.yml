@@ -1,0 +1,7 @@
+post:
+  published_in: Posted in %1
+  edit: Edit
+  new: New post
+auth:
+  login: Log in
+  logout: Log out

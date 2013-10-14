@@ -1,1 +1,7 @@
-dummy:
+post:
+  published_in: Опубликовано в %1
+  edit: Редактировать
+  new: Новая запись
+auth:
+  login: Войти
+  logout: Выйти

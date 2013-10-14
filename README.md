@@ -7,6 +7,7 @@ _Tintintin_ is simple blogging software. It’s small and easily modifiable. _Ti
  - [Disqus](http://www.disqus.com) comments
  - Markdown (via Discount) and Textile (via RedCloth)
  - Atom feed
+ - Localization (via R18n)
  - Tags
 
 **TODO:** Perform update according list below
@@ -40,6 +41,10 @@ Finally, log in using the password you selected, then click `New Post`. The rest
 ## Customize it
 
 There are no themes or settings beyond the basic ones in the Blog struct. Just edit the CSS or the code as you see fit.
+
+## Localization
+
+Please take a look at files in `i18n` folder. Feel free to add new translations.
 
 ## Import data
 Some kinds of data can be imported easily, take a look at the rake task **:import** for an example of loading from a YAML file with field names that match the database schema.

@@ -4,8 +4,8 @@
       %a.brand{ href: "/" } Blog
       %p.navbar-text.pull-right
         - if admin?
-          %a{ href: "/posts/new" }<> New post
+          %a{ href: "/posts/new" }<>= t.post.new
           &nbsp;|&nbsp;
-          %a{ href: "/logout" }> Log out
+          %a{ href: "/logout" }>= t.auth.logout
         - else
-          %a{ href: "/auth" } Log in
+          %a{ href: "/auth" }= t.auth.login

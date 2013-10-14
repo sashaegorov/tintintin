@@ -24,6 +24,8 @@ Then /^(?:|I )should see localized "([^\"]*)"(?: within "([^\"]*)")?$/ do |text,
   with_scope(selector) do
     if page.respond_to? :should
       # TODO: Aviod ugly and slow `eval' if possible
+      # Alchemist example
+      # 3.hour.to.minutes.to_i > 3.hour.to.send(:minutes).send(:to_i)
       page.should have_content(eval "R18n.t.#{text}")
     else
       assert page.has_content?(eval "R18n.t.#{text}")

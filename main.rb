@@ -17,7 +17,7 @@ module Scanty
   # http://www.sinatrarb.com/contrib/config_file.html
   # 2. blog_config.yml for blog's `OpenStruct.*`
   # Merge blog config with 'Blog' ostruct
-  config_file "#{settings.root}/config.yml"
+  config_file File.dirname(__FILE__) + '/config.yml'
 
   configure do
     DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')

@@ -9,7 +9,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
 module Scanty
   class Blog < Sinatra::Base
 
-  register Sinatra::Contrib
+  register Sinatra::ConfigFile
   register Sinatra::R18n
 
   # FIXME: Better settings
